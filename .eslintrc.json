@@ -5,12 +5,18 @@
     "eslint-config-airbnb"
   ],
   "rules": {
+    "max-len": ["warn", {"code": 120}],
     "indent": ["warn", 4, {"ignoredNodes": ["JSXAttribute"]}],
     "react/jsx-indent": ["warn", 4],
     "react/jsx-indent-props": [0, "first"],
     "object-curly-spacing": "off",
+    "object-curly-newline": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
     "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "labelAttributes": ["label"],
+      "depth": 3
+    }],
     "react/prop-types": "off"
   }
 }

@@ -3,20 +3,23 @@ import {ThemeContext} from '../../themes';
 import './List.less';
 
 export default function List(props) {
+    const {items, progress} = props;
     const {settings} = useContext(ThemeContext);
-    const itemTheme = {
-        background: settings.contentBg,
-    };
+    const currentProgress = progress.get(new Date().toLocaleDateString());
 
-    const {items} = props;
     const list = items.map((item) => {
-        const progress = {
-            width: `${item.progress}%`,
+        let width = Math.round(((currentProgress ? currentProgress[item.key] : 0) * 100) / item.countNumber);
+        width = width ? `${width}%` : 0;
+        const progressTheme = {
+            width,
             background: settings.progressBg,
             color: settings.color,
         };
-        const title = {
+        const titleTheme = {
             color: settings.color,
+        };
+        const itemTheme = {
+            background: settings.contentBg,
         };
 
         return (
@@ -27,8 +30,8 @@ export default function List(props) {
                 role="presentation"
                 onClick={() => props.increaseProgress(item.key)}
             >
-                <div className="list-item__progress" style={progress} />
-                <div className="list-item__title" style={title}>{item.title}</div>
+                <div className="list-item__progress" style={progressTheme} />
+                <div className="list-item__title" style={titleTheme}>{item.title}</div>
             </li>
         );
     });

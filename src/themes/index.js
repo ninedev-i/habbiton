@@ -8,6 +8,8 @@ const themes = {
         headerBg: '#7fd7e7',
         contentBg: '#fff',
         progressBg: '#d7f9ff',
+        inputBg: '#fff',
+        inputBorder: '1px solid #cfcfcf',
     },
     dark: {
         color: '#fff',
@@ -15,6 +17,8 @@ const themes = {
         headerBg: '#333237',
         contentBg: '#454449',
         progressBg: '#7fd7e7',
+        inputBg: '#444446',
+        inputBorder: '1px solid #626164',
     },
 };
 

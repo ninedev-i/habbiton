@@ -19,7 +19,7 @@ export default function Header() {
                     role="presentation"
                     onClick={() => toggleTheme()}
                 >
-                    {theme}
+                    {theme === 'light' ? 'Dark theme' : 'Light theme'}
                 </div>
                 <Link to="/" className="header-link">Home</Link>
                 <Link to="/about" className="header-link">Statistic</Link>

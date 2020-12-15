@@ -10,23 +10,51 @@ body {
     color: #3d3d3d;
 }
 
+h1 {
+    font-size: 20px;
+    margin: 0 0 8px 0;
+    transition: @transition;
+}
+
 input {
     height: 24px;
     border-radius: 5px;
-    border: 1px solid #cfcfcf;
     outline: none;
     padding: 2px 6px;
+    transition: @transition;
 }
 
-.button {
-    width: 30px;
+label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+    transition: @transition;
+}
+
+.buttonMixin() {
     height: 30px;
     border: 0;
     border-radius: 5px;
-    color: #fff;
-    background: #7fd7e7;
     cursor: pointer;
+    padding: 0 12px;
+    transition: @transition;
 }
+
+.button {
+    &-accented {
+        .buttonMixin();
+        color: #fff;
+        background: #7fd7e7;
+    }
+
+    &-unaccented {
+        .buttonMixin();
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0);
+        border: 1px solid #7fd7e7;
+    }
+}
+
 
 #root {
     height: 100vh;
@@ -46,5 +74,27 @@ input {
 
     &:hover {
         color: #ea6f56;
+    }
+}
+
+.flex {
+    &-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.margin {
+    &-bottom {
+        margin-bottom: 12px;
+    }
+
+    &-left {
+        margin-left: 12px;
     }
 }
