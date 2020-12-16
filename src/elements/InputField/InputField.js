@@ -30,7 +30,13 @@ export default function InputField(props) {
                 placeholder={placeholder}
                 value={value}
                 min={1}
-                onChange={(ev) => onChange(ev.target.value)}
+                onChange={(ev) => {
+                    let output = ev.target.value;
+                    if (inputType === 'number') {
+                        output = +output;
+                    }
+                    return onChange(output);
+                }}
             />
         </div>
     );

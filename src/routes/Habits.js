@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import List from '../elements/List/List';
+import DayProgress from '../elements/DayProgress/DayProgress';
 import {getProgress, saveProgress} from '../storage';
 
 export default function Habits(props) {
@@ -27,12 +28,11 @@ export default function Habits(props) {
 
     return (
         <>
-            <Link
-                to="/add"
-                className="link"
-            >
-                Add habit
-            </Link>
+            <DayProgress
+                items={habits}
+                progress={progress}
+            />
+
             <List
                 items={habits}
                 progress={progress}

@@ -13,6 +13,8 @@ export default function Header() {
         <header className="header-container" style={bgTheme}>
             <Link to="/" className="header-logo">Habbiton</Link>
             <div className="header-link__container">
+                <Link to="/add" className="header-link header-toggleTheme">+ Habit</Link>
+
                 <div
                     className="header-link header-toggleTheme"
                     title="Toggle theme"

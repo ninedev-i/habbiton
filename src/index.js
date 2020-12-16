@@ -25,20 +25,10 @@ function App() {
     }, [habits]);
 
     const updateHabits = (updatedItem, key) => {
-        if (key) {
-            const editedHabits = habits
-                .slice(0)
-                .map((item) => {
-                    if (item.key === +key) {
-                        return updatedItem;
-                    }
-                    return item;
-                });
-
-            setHabits(editedHabits);
-        } else {
-            setHabits([...habits, updatedItem]);
-        }
+        const editedHabits = key
+            ? habits.slice(0).map((item) => (item.key === +key ? updatedItem : item))
+            : [...habits, updatedItem];
+        setHabits(editedHabits);
     };
 
     const wrapperTheme = {

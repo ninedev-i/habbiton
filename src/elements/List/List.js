@@ -41,6 +41,7 @@ export default function List(props) {
                 <div className="list-item__title" style={titleTheme}>{item.title}</div>
                 <div
                     className="list-item__toolbar"
+                    role="presentation"
                     onClick={(ev) => editItem(ev, item.key)}
                 >
                     Edit
