@@ -1,22 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import List from '../elements/List/List';
-import Edit from '../elements/Edit/Edit';
-import {getHabits, saveHabits, getProgress, saveProgress} from '../storage';
+import {getProgress, saveProgress} from '../storage';
 
-export default function Habits() {
-    const defaultHabit = {
-        key: 0,
-        title: 'Training',
-        dateRange: null,
-    };
-    const initialItem = getHabits(defaultHabit);
-    const [habits, setHabits] = useState(initialItem);
+export default function Habits(props) {
+    const {habits} = props;
     const today = new Date().toLocaleDateString();
     const [progress, setProgress] = useState(getProgress());
-
-    useEffect(() => {
-        saveHabits(habits);
-    }, [habits]);
 
     const increaseProgress = (key, day = today) => {
         const clonedProgress = new Map(progress);
@@ -37,7 +27,12 @@ export default function Habits() {
 
     return (
         <>
-            <Edit items={habits} addHabit={(item) => setHabits([...habits, item])} />
+            <Link
+                to="/add"
+                className="link"
+            >
+                Add habit
+            </Link>
             <List
                 items={habits}
                 progress={progress}

@@ -1,27 +1,87 @@
-import React, {Suspense, lazy, useContext} from 'react';
+import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import './index.less';
+import {getHabits, saveHabits} from './storage';
 import ThemeProvider, {ThemeContext} from './themes';
 import Header from './elements/Header/Header';
+import './index.less';
 
 const Habits = lazy(() => import('./routes/Habits'));
+const Edit = lazy(() => import('./routes/Edit'));
 const Statistic = lazy(() => import('./routes/Statistic'));
 
 function App() {
     const {settings} = useContext(ThemeContext);
-    const containerTheme = {
+    const defaultHabit = {
+        key: 0,
+        title: 'Training',
+        dateRange: null,
+    };
+    const initialItem = getHabits(defaultHabit);
+    const [habits, setHabits] = useState(initialItem);
+
+    useEffect(() => {
+        saveHabits(habits);
+    }, [habits]);
+
+    const updateHabits = (updatedItem, key) => {
+        if (key) {
+            const editedHabits = habits
+                .slice(0)
+                .map((item) => {
+                    if (item.key === +key) {
+                        return updatedItem;
+                    }
+                    return item;
+                });
+
+            setHabits(editedHabits);
+        } else {
+            setHabits([...habits, updatedItem]);
+        }
+    };
+
+    const wrapperTheme = {
         background: settings.background,
     };
 
     return (
         <>
             <Header />
-            <div className="container" style={containerTheme}>
+            <div className="wrapper" style={wrapperTheme}>
                 <Suspense fallback={<div>Loading…</div>}>
                     <Switch>
-                        <Route exact path="/" component={Habits} />
-                        <Route path="/about" component={Statistic} />
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Habits
+                                    habits={habits}
+                                />
+                            )}
+                        />
+
+                        <Route
+                            path="/add"
+                            render={() => (
+                                <Edit
+                                    habits={habits}
+                                    updateHabits={(item, habitId) => updateHabits(item, habitId)}
+                                />
+                            )}
+                        />
+
+                        <Route
+                            path="/edit/:id"
+                            render={() => (
+                                <Edit
+                                    habits={habits}
+                                    updateHabits={(item, habitId) => updateHabits(item, habitId)}
+                                />
+                            )}
+                        />
+
+                        <Route path="/statistics" component={Statistic} />
                     </Switch>
                 </Suspense>
             </div>

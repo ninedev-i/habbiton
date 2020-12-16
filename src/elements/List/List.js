@@ -1,10 +1,12 @@
 import React, {useContext} from 'react';
+import {useHistory} from 'react-router-dom';
 import {ThemeContext} from '../../themes';
 import './List.less';
 
 export default function List(props) {
     const {items, progress} = props;
     const {settings} = useContext(ThemeContext);
+    const router = useHistory();
     const currentProgress = progress.get(new Date().toLocaleDateString());
 
     const list = items.map((item) => {
@@ -22,6 +24,11 @@ export default function List(props) {
             background: settings.contentBg,
         };
 
+        const editItem = (ev, key) => {
+            ev.stopPropagation();
+            router.push(`edit/${key}`);
+        };
+
         return (
             <li
                 className="list-item"
@@ -32,6 +39,12 @@ export default function List(props) {
             >
                 <div className="list-item__progress" style={progressTheme} />
                 <div className="list-item__title" style={titleTheme}>{item.title}</div>
+                <div
+                    className="list-item__toolbar"
+                    onClick={(ev) => editItem(ev, item.key)}
+                >
+                    Edit
+                </div>
             </li>
         );
     });

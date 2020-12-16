@@ -6,21 +6,31 @@
         display: flex;
         justify-content: space-between;
         transition: @transition;
+        align-items: baseline;
     }
 
     &-logo {
         color: #fff;
         font-size: 18px;
         font-weight: bold;
+        text-decoration: none;
     }
 
     &-link {
         &__container {
             display: flex;
+            align-items: baseline;
         }
 
         color: #fff;
         cursor: pointer;
         margin-right: 12px;
+    }
+
+    &-toggleTheme {
+        border: 1px solid white;
+        padding: 2px 8px;
+        border-radius: 9px;
+        font-size: 14px;
     }
 }

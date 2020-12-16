@@ -17,6 +17,15 @@
         cursor: pointer;
         transition: @transition;
 
+        &:hover {
+            box-shadow: 0 0 15px -4px rgba(34, 60, 80, 0.3);
+            transition: 0.2s ease-out;
+
+            .list-item__toolbar {
+                display: block;
+            }
+        }
+
         &__title {
             position: relative;
             transition: @transition;
@@ -28,6 +37,19 @@
             position: absolute;
             left: 0;
             transition: @transition;
+        }
+
+        &__toolbar {
+            position: absolute;
+            display: none;
+            z-index: 1000;
+            right: 0;
+            padding: 12px;
+            top: 0;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

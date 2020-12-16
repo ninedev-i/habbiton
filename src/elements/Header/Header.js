@@ -11,18 +11,17 @@ export default function Header() {
 
     return (
         <header className="header-container" style={bgTheme}>
-            <div className="header-logo">Habbiton</div>
+            <Link to="/" className="header-logo">Habbiton</Link>
             <div className="header-link__container">
                 <div
-                    className="header-link"
+                    className="header-link header-toggleTheme"
                     title="Toggle theme"
                     role="presentation"
                     onClick={() => toggleTheme()}
                 >
                     {theme === 'light' ? 'Dark theme' : 'Light theme'}
                 </div>
-                <Link to="/" className="header-link">Home</Link>
-                <Link to="/about" className="header-link">Statistic</Link>
+                {/* <Link to="/statistics" className="header-link">Statistic</Link> */}
             </div>
         </header>
     );
