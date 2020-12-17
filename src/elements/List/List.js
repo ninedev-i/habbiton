@@ -4,10 +4,10 @@ import {ThemeContext} from '../../themes';
 import './List.less';
 
 export default function List(props) {
-    const {items, progress} = props;
+    const {items, progress, currentDate} = props;
     const {settings} = useContext(ThemeContext);
     const router = useHistory();
-    const currentProgress = progress.get(new Date().toLocaleDateString());
+    const currentProgress = progress.get(currentDate);
 
     const list = items.map((item) => {
         let width = Math.round(((currentProgress ? currentProgress[item.key] : 0) * 100) / item.countNumber);

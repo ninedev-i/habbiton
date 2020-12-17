@@ -2,6 +2,7 @@ import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import {getHabits, saveHabits} from './storage';
+import {getFormattedDate} from './helpers';
 import ThemeProvider, {ThemeContext} from './themes';
 import Header from './elements/Header/Header';
 import './index.less';
@@ -19,6 +20,7 @@ function App() {
     };
     const initialItem = getHabits(defaultHabit);
     const [habits, setHabits] = useState(initialItem);
+    const [currentDay, setCurrentDay] = useState(getFormattedDate());
 
     useEffect(() => {
         saveHabits(habits);
@@ -47,6 +49,8 @@ function App() {
                             render={() => (
                                 <Habits
                                     habits={habits}
+                                    currentDay={currentDay}
+                                    setCurrentDay={setCurrentDay}
                                 />
                             )}
                         />

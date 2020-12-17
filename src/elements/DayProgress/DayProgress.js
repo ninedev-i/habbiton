@@ -3,8 +3,8 @@ import {ThemeContext} from '../../themes';
 import './DayProgress.less';
 
 export default function DayProgress(props) {
-    const {progress, items} = props;
-    const currentProgress = progress.get(new Date().toLocaleDateString()) || {};
+    const {progress, items, currentDate} = props;
+    const currentProgress = progress.get(currentDate) || {};
 
     let current = 0;
     Object.keys(currentProgress).forEach((key) => {

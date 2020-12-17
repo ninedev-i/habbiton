@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import List from '../elements/List/List';
 import DayProgress from '../elements/DayProgress/DayProgress';
+import DatePicker from '../elements/DatePicker/DatePicker';
 import {getProgress, saveProgress} from '../storage';
+import {getFormattedDate} from '../helpers';
+import './Habits.less';
 
 export default function Habits(props) {
-    const {habits} = props;
-    const today = new Date().toLocaleDateString();
+    const {habits, currentDay, setCurrentDay} = props;
     const [progress, setProgress] = useState(getProgress());
 
-    const increaseProgress = (key, day = today) => {
+    const increaseProgress = (key, day = currentDay) => {
         const clonedProgress = new Map(progress);
         if (!progress.get(day)) {
             clonedProgress.set(day, {});
@@ -27,17 +28,29 @@ export default function Habits(props) {
     };
 
     return (
-        <>
-            <DayProgress
-                items={habits}
-                progress={progress}
-            />
+        <div className="flex-row">
+            <div className="habits-main">
+                <DayProgress
+                    items={habits}
+                    progress={progress}
+                    currentDate={currentDay}
+                />
 
-            <List
-                items={habits}
-                progress={progress}
-                increaseProgress={increaseProgress}
-            />
-        </>
+                <List
+                    items={habits}
+                    progress={progress}
+                    currentDate={currentDay}
+                    increaseProgress={increaseProgress}
+                />
+            </div>
+            <div className="habits-calendar">
+                <DatePicker
+                    mode="single"
+                    disableDaysOfWeek="{true}"
+                    selected={new Date(currentDay)}
+                    setSelected={(selection) => setCurrentDay(getFormattedDate(selection))}
+                />
+            </div>
+        </div>
     );
 }
