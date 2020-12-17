@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import InputField from '~/elements/InputField/InputField';
+import {getFormattedDate} from '~/helpers';
 import {ThemeContext} from '~/themes';
 
 export default function Edit(props) {
@@ -13,7 +14,7 @@ export default function Edit(props) {
     } else {
         initialItem = {
             title: '',
-            dateRange: null,
+            dateRange: [getFormattedDate(), null],
             countNumber: 1,
         };
     }

@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
+import {isShowHabit} from '~/helpers';
 import {ThemeContext} from '~/themes';
 import './List.less';
 
@@ -10,6 +11,10 @@ export default function List(props) {
     const currentProgress = progress.get(currentDate);
 
     const list = items.map((item) => {
+        if (!isShowHabit(item, currentDate)) {
+            return;
+        }
+
         const current = (currentProgress && currentProgress[item.key]) || 0;
         let width = Math.round((current * 100) / item.countNumber);
         width = width ? `${width}%` : 0;
@@ -23,6 +28,10 @@ export default function List(props) {
         };
         const itemTheme = {
             background: settings.contentBg,
+        };
+
+        const doneLineTheme = {
+            background: settings.color,
         };
 
         const editItem = (ev, key) => {
@@ -40,14 +49,16 @@ export default function List(props) {
             >
                 <div className="list-item__progress" style={progressTheme} />
                 <div className="list-item__title" style={titleTheme}>{item.title}</div>
-                <div className="list-item__counter">
+                <div className="list-item__counter" style={titleTheme}>
                     <span>{current}</span>
                     <span>/</span>
                     <span>{item.countNumber}</span>
                 </div>
+                {current >= item.countNumber ? <div className="list-item__done" style={doneLineTheme}></div> : null}
                 <div
                     className="list-item__toolbar"
                     role="presentation"
+                    style={titleTheme}
                     onClick={(ev) => editItem(ev, item.key)}
                 >
                     Edit

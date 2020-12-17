@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {ThemeContext} from '~/themes';
+import {isShowHabit} from '~/helpers';
 import './DayProgress.less';
 
 export default function DayProgress(props) {
@@ -10,7 +11,7 @@ export default function DayProgress(props) {
     Object.keys(currentProgress).forEach((key) => {
         current += currentProgress[key];
     });
-    const total = items.reduce((a, b) => a + (b ? +b.countNumber : 0), 0);
+    const total = items.reduce((a, b) => a + (b && isShowHabit(b, currentDate) ? +b.countNumber : 0), 0);
 
     let width = Math.round((current * 100) / total);
     width = width ? {width: `${width}%`} : {width: 0};
