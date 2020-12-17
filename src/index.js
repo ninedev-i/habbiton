@@ -1,24 +1,24 @@
 import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import {getHabits, saveHabits} from './storage';
-import {getFormattedDate} from './helpers';
-import ThemeProvider, {ThemeContext} from './themes';
-import Header from './elements/Header/Header';
-import './index.less';
+import {getHabits, saveHabits} from '~/storage';
+import {getFormattedDate} from '~/helpers';
+import ThemeProvider, {ThemeContext} from '~/themes';
+import Header from '~/elements/Header/Header';
+import '~/index.less';
 
-const Habits = lazy(() => import('./routes/Habits'));
-const Edit = lazy(() => import('./routes/Edit'));
-const Statistic = lazy(() => import('./routes/Statistic'));
+const Habits = lazy(() => import('~/routes/Habits'));
+const Edit = lazy(() => import('~/routes/Edit'));
+const Statistic = lazy(() => import('~/routes/Statistic'));
 
 function App() {
     const {settings} = useContext(ThemeContext);
-    const defaultHabit = {
+    const defaultHabits = [{
         key: 0,
         title: 'Training',
         dateRange: null,
-    };
-    const initialItem = getHabits(defaultHabit);
+    }];
+    const initialItem = getHabits(defaultHabits);
     const [habits, setHabits] = useState(initialItem);
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
 

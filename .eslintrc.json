@@ -18,6 +18,8 @@
       "labelAttributes": ["label"],
       "depth": 3
     }],
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
     "react/prop-types": "off"
   }
 }

@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
-import InputField from '../elements/InputField/InputField';
-import {ThemeContext} from '../themes';
+import InputField from '~/elements/InputField/InputField';
+import {ThemeContext} from '~/themes';
 
 export default function Edit(props) {
     const router = useHistory();

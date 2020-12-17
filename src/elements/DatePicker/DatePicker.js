@@ -7,18 +7,16 @@ export default function DatePicker(props) {
     const {mode, selected, setSelected, disableDaysOfWeek} = props;
 
     return (
-        <>
-            <SimpleReactCalendar
-                blockClassName="date-picker"
-                disableDaysOfWeek={disableDaysOfWeek}
-                mode={mode || 'range'}
-                activeMonth={new Date()}
-                renderDay={(properties) => <DayAccented {...properties} />}
-                selected={selected}
-                onSelect={(selection) => setSelected(selection)}
-            />
-        </>
-        );
+        <SimpleReactCalendar
+            blockClassName="date-picker"
+            disableDaysOfWeek={disableDaysOfWeek}
+            mode={mode || 'range'}
+            activeMonth={new Date()}
+            renderDay={(properties) => <DayAccented {...properties} />}
+            selected={selected}
+            onSelect={(selection) => setSelected(selection)}
+        />
+    );
 }
 
 function DayAccented(props) {

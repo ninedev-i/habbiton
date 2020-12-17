@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import List from '../elements/List/List';
-import DayProgress from '../elements/DayProgress/DayProgress';
-import DatePicker from '../elements/DatePicker/DatePicker';
+import List from '~/elements/List/List';
+import DayProgress from '~/elements/DayProgress/DayProgress';
+import DatePicker from '~/elements/DatePicker/DatePicker';
 import {getProgress, saveProgress} from '../storage';
-import {getFormattedDate} from '../helpers';
+import {getFormattedDate} from '~/helpers';
 import './Habits.less';
 
 export default function Habits(props) {

@@ -1,4 +1,4 @@
-@import "../../themes.less";
+@import "../../constants.less";
 
 .list {
     &-container {
@@ -7,7 +7,10 @@
     }
 
     &-item {
-        background: @background;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
         padding: 12px;
         margin-bottom: 12px;
         border-radius: 6px;
@@ -24,6 +27,10 @@
             .list-item__toolbar {
                 display: block;
             }
+
+            .list-item__counter {
+                display: none;
+            }
         }
 
         &__title {
@@ -37,6 +44,11 @@
             position: absolute;
             left: 0;
             transition: @transition;
+        }
+
+        &__counter {
+            font-size: 14px;
+            z-index: 1;
         }
 
         &__toolbar {

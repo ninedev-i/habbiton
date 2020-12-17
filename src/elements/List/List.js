@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
-import {ThemeContext} from '../../themes';
+import {ThemeContext} from '~/themes';
 import './List.less';
 
 export default function List(props) {
@@ -10,7 +10,8 @@ export default function List(props) {
     const currentProgress = progress.get(currentDate);
 
     const list = items.map((item) => {
-        let width = Math.round(((currentProgress ? currentProgress[item.key] : 0) * 100) / item.countNumber);
+        const current = (currentProgress && currentProgress[item.key]) || 0;
+        let width = Math.round((current * 100) / item.countNumber);
         width = width ? `${width}%` : 0;
         const progressTheme = {
             width,
@@ -39,6 +40,11 @@ export default function List(props) {
             >
                 <div className="list-item__progress" style={progressTheme} />
                 <div className="list-item__title" style={titleTheme}>{item.title}</div>
+                <div className="list-item__counter">
+                    <span>{current}</span>
+                    <span>/</span>
+                    <span>{item.countNumber}</span>
+                </div>
                 <div
                     className="list-item__toolbar"
                     role="presentation"

@@ -9,6 +9,14 @@ module.exports = {
         publicPath: '/',
         filename: '[name].[contenthash].js',
     },
+    resolve: {
+        alias: {
+            // '~': path.resolve(__dirname, './src/'),
+            // _: [path.resolve(__dirname, 'src/')],
+            '~': path.resolve(__dirname, 'src'),
+        },
+        extensions: ['.js', '.less'],
+    },
     module: {
         rules: [
             {

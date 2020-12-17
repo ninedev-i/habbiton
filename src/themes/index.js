@@ -1,5 +1,5 @@
 import React, {createContext, useState} from 'react';
-import {getTheme, saveTheme} from '../storage';
+import {getTheme, saveTheme} from '~/storage';
 
 const themes = {
     light: {

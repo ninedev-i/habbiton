@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {ThemeContext} from '../../themes';
+import {ThemeContext} from '~/themes';
 
 export default function InputField(props) {
     const {settings} = useContext(ThemeContext);
