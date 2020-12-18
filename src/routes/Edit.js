@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import InputField from '~/elements/InputField/InputField';
+import WeekdaySelector from '~/elements/WeekdaySelector/WeekdaySelector';
 import {getFormattedDate} from '~/helpers';
 import {ThemeContext} from '~/themes';
 
@@ -16,6 +17,7 @@ export default function Edit(props) {
             title: '',
             dateRange: [getFormattedDate(), null],
             countNumber: 1,
+            weekDays: [true, true, true, true, true, false, false],
         };
     }
 
@@ -60,6 +62,15 @@ export default function Edit(props) {
                 inputType="number"
                 value={newItem.countNumber}
                 onChange={(countNumber) => setNewItem({...newItem, ...{countNumber}})}
+            />
+
+            <WeekdaySelector
+                selection={newItem.weekDays}
+                onSelect={(day, isChecked) => {
+                    const weekDays = newItem.weekDays.slice(0);
+                    weekDays[day] = isChecked;
+                    setNewItem({...newItem, ...{weekDays}});
+                }}
             />
 
             <div className="flex-row">
