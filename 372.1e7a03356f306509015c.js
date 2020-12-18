@@ -1,0 +1,1 @@
+(window.webpackJsonphabbiton=window.webpackJsonphabbiton||[]).push([[372],{6372:(e,t,n)=>{"use strict";n.r(t),n.d(t,{default:()=>a});var i=n(7294),s=n.n(i);function a(){return s().createElement("div",{__self:this,__source:{fileName:"C:\\Web\\habbiton\\src\\routes\\Statistic.js",lineNumber:4,columnNumber:12}},"Stat")}}}]);
