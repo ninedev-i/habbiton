@@ -18,6 +18,7 @@
       "labelAttributes": ["label"],
       "depth": 3
     }],
+    "linebreak-style": ["error", "windows"],
     "arrow-body-style": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",

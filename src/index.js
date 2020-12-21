@@ -1,5 +1,5 @@
 import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import {getHabits, saveHabits} from '~/storage';
 import {getFormattedDate} from '~/helpers';
@@ -83,11 +83,15 @@ function App() {
     );
 }
 
+function RouterWrapper(props) {
+    return IS_PRODUCTION ? <HashRouter {...props} /> : <BrowserRouter {...props} />;
+}
+
 ReactDOM.render(
-    <Router>
+    <RouterWrapper>
         <ThemeProvider>
             <App />
         </ThemeProvider>
-    </Router>,
+    </RouterWrapper>,
     document.getElementById('root'),
 );
