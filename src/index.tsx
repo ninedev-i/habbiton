@@ -1,24 +1,18 @@
-import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
+import React, {Suspense, lazy, useContext, useState, useEffect, ReactNode} from 'react';
 import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import {getHabits, saveHabits} from '~/storage';
-import {getFormattedDate} from '~/helpers';
-import ThemeProvider, {ThemeContext} from '~/themes';
-import Header from '~/elements/Header/Header';
-import '~/index.less';
+import {getHabits, saveHabits, IHabit} from './storage';
+import {getFormattedDate} from './helpers';
+import ThemeProvider, {ThemeContext} from './themes';
+import Header from './elements/Header/Header';
+import './index.less';
 
-const Habits = lazy(() => import('~/routes/Habits'));
-const Edit = lazy(() => import('~/routes/Edit'));
-const Statistic = lazy(() => import('~/routes/Statistic'));
+const Habits = lazy(() => import('./routes/Habits'));
+const Edit = lazy(() => import('./routes/Edit'));
 
 function App() {
     const {settings} = useContext(ThemeContext);
-    const defaultHabits = [{
-        key: 0,
-        title: 'Training',
-        dateRange: null,
-    }];
-    const initialItem = getHabits(defaultHabits);
+    const initialItem = getHabits();
     const [habits, setHabits] = useState(initialItem);
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
 
@@ -26,7 +20,7 @@ function App() {
         saveHabits(habits);
     }, [habits]);
 
-    const updateHabits = (updatedItem, key) => {
+    const updateHabits = (updatedItem: IHabit, key: number) => {
         const editedHabits = key
             ? habits.slice(0).map((item) => (item.key === +key ? updatedItem : item))
             : [...habits, updatedItem];
@@ -60,7 +54,7 @@ function App() {
                             render={() => (
                                 <Edit
                                     habits={habits}
-                                    updateHabits={(item, habitId) => updateHabits(item, habitId)}
+                                    updateHabits={(item: IHabit, habitId: number) => updateHabits(item, habitId)}
                                 />
                             )}
                         />
@@ -70,12 +64,10 @@ function App() {
                             render={() => (
                                 <Edit
                                     habits={habits}
-                                    updateHabits={(item, habitId) => updateHabits(item, habitId)}
+                                    updateHabits={(item: IHabit, habitId: number) => updateHabits(item, habitId)}
                                 />
                             )}
                         />
-
-                        <Route path="/statistics" component={Statistic} />
                     </Switch>
                 </Suspense>
             </div>
@@ -83,7 +75,8 @@ function App() {
     );
 }
 
-function RouterWrapper(props) {
+function RouterWrapper(props: {children: ReactNode}) {
+    const IS_PRODUCTION = false;
     return IS_PRODUCTION ? <HashRouter {...props} /> : <BrowserRouter {...props} />;
 }
 

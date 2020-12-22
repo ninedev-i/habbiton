@@ -1,8 +1,18 @@
-import React, {useContext} from 'react';
-import {ThemeContext} from '~/themes';
+import React, {ReactNode, useContext} from 'react';
+import {ThemeContext} from '../../themes';
 import './InputField.less';
 
-export default function InputField(props) {
+interface IInputField {
+    inputId: string;
+    inputType: string;
+    placeholder?: string;
+    value: string|number;
+    label: string;
+    className: string;
+    onChange: Function;
+}
+
+export default function InputField(props: IInputField) {
     const {settings} = useContext(ThemeContext);
     const {inputId, inputType, label, className, onChange} = props;
 
@@ -16,7 +26,7 @@ export default function InputField(props) {
 
     const containerClass = `flex-column ${className}`;
 
-    const changeHandler = (value) => {
+    const changeHandler = (value: string|number) => {
         let output = value;
         if (inputType === 'number') {
             output = +output;
@@ -36,25 +46,35 @@ export default function InputField(props) {
                 theme={textTheme}
             />
             {inputType === 'number'
-                ? <ButtonWrapper changeHandler={changeHandler} {...props}>
+                ? (
+                    <ButtonWrapper changeHandler={changeHandler} {...props}>
+                        <Input
+                            theme={{...inputTheme, ...textTheme}}
+                            changeHandler={changeHandler}
+                            {...props}
+                        />
+                    </ButtonWrapper>
+                )
+                : (
                     <Input
                         theme={{...inputTheme, ...textTheme}}
                         changeHandler={changeHandler}
                         {...props}
                     />
-                </ButtonWrapper>
-                : <Input
-                    theme={{...inputTheme, ...textTheme}}
-                    changeHandler={changeHandler}
-                    {...props}
-                />}
+                )}
         </div>
     );
 }
 
-function Label({caption, forId, theme}) {
+interface ILabel {
+    caption: string;
+    forId: string;
+    theme: {};
+}
+
+function Label({caption, forId, theme}: ILabel) {
     if (!caption) {
-        return '';
+        return;
     }
 
     return (
@@ -67,7 +87,12 @@ function Label({caption, forId, theme}) {
     );
 }
 
-function Input({inputId, inputType, placeholder, value, changeHandler, theme}) {
+interface IInput extends IInputField {
+    theme: {};
+    changeHandler: Function;
+}
+
+function Input({inputId, inputType, placeholder, value, changeHandler, theme}: IInput) {
     return (
         <input
             id={inputId}
@@ -82,16 +107,22 @@ function Input({inputId, inputType, placeholder, value, changeHandler, theme}) {
     );
 }
 
-function ButtonWrapper({value, changeHandler, children}) {
-    const changeValue = (isIncrease) => {
-        changeHandler(isIncrease ? ++value : --value);
-    }
+interface IButtonWrapper {
+    value: string|number;
+    changeHandler: Function;
+    children: ReactNode;
+}
+
+function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {
+    const changeValue = (isIncrease?: boolean) => {
+        changeHandler(isIncrease ? +value + 1 : +value - 1);
+    };
 
     return (
         <div className="flex-row input-number__container">
-            <button className="button-accented" onClick={() => changeValue()}>-</button>
+            <button className="button-accented" type="button" onClick={() => changeValue()}>-</button>
             <div className="input-number">{children}</div>
-            <button className="button-accented" onClick={() => changeValue(true)}>+</button>
+            <button className="button-accented" type="button" onClick={() => changeValue(true)}>+</button>
         </div>
     );
 }

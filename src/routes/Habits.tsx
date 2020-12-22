@@ -1,16 +1,22 @@
 import React, {useState} from 'react';
-import List from '~/elements/List/List';
-import DayProgress from '~/elements/DayProgress/DayProgress';
-import DatePicker from '~/elements/DatePicker/DatePicker';
-import {getProgress, saveProgress} from '../storage';
-import {getFormattedDate} from '~/helpers';
+import List from '../elements/List/List';
+import DayProgress from '../elements/DayProgress/DayProgress';
+import DatePicker from '../elements/DatePicker/DatePicker';
+import {getProgress, saveProgress, IHabit} from '../storage';
+import {getFormattedDate} from '../helpers';
 import './Habits.less';
 
-export default function Habits(props) {
+interface IHabits {
+    habits: IHabit[];
+    currentDay: string;
+    setCurrentDay: Function;
+}
+
+export default function Habits(props: IHabits) {
     const {habits, currentDay, setCurrentDay} = props;
     const [progress, setProgress] = useState(getProgress());
 
-    const increaseProgress = (key, day = currentDay) => {
+    const increaseProgress = (key: number, day = currentDay) => {
         const clonedProgress = new Map(progress);
         if (!progress.get(day)) {
             clonedProgress.set(day, {});
@@ -46,9 +52,9 @@ export default function Habits(props) {
             <div className="habits-calendar">
                 <DatePicker
                     mode="single"
-                    disableDaysOfWeek="{true}"
+                    disableDaysOfWeek
                     selected={new Date(currentDay)}
-                    setSelected={(selection) => setCurrentDay(getFormattedDate(selection))}
+                    setSelected={(selection: Date) => setCurrentDay(getFormattedDate(selection))}
                 />
             </div>
         </div>

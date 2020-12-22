@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
-import {ThemeContext} from '~/themes';
+import {ThemeContext} from '../../themes';
 import './Header.less';
 
 export default function Header() {
@@ -23,7 +23,6 @@ export default function Header() {
                 >
                     {theme === 'light' ? 'Dark theme' : 'Light theme'}
                 </div>
-                {/* <Link to="/statistics" className="header-link">Statistic</Link> */}
             </div>
         </header>
     );

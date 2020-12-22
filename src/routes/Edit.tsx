@@ -1,14 +1,20 @@
 import React, {useState, useContext} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
-import InputField from '~/elements/InputField/InputField';
-import WeekdaySelector from '~/elements/WeekdaySelector/WeekdaySelector';
-import {getFormattedDate} from '~/helpers';
-import {ThemeContext} from '~/themes';
+import InputField from '../elements/InputField/InputField';
+import WeekdaySelector from '../elements/WeekdaySelector/WeekdaySelector';
+import {getFormattedDate} from '../helpers';
+import {ThemeContext} from '../themes';
+import {IHabit} from '../storage';
 
-export default function Edit(props) {
+interface IEdit {
+    habits: IHabit[];
+    updateHabits: Function;
+}
+
+export default function Edit(props: IEdit) {
     const router = useHistory();
     const {habits, updateHabits} = props;
-    const habitId = useParams().id;
+    const habitId = useParams<{id: string}>().id;
     let initialItem;
     if (habitId) {
         initialItem = habits.find((item) => item.key === +habitId);
@@ -52,7 +58,7 @@ export default function Edit(props) {
                 placeholder="Habit name"
                 inputType="text"
                 value={newItem.title}
-                onChange={(title) => setNewItem({...newItem, ...{title}})}
+                onChange={(title: string) => setNewItem({...newItem, ...{title}})}
             />
 
             <InputField
@@ -61,12 +67,12 @@ export default function Edit(props) {
                 label="How many times per day"
                 inputType="number"
                 value={newItem.countNumber}
-                onChange={(countNumber) => setNewItem({...newItem, ...{countNumber}})}
+                onChange={(countNumber: number) => setNewItem({...newItem, ...{countNumber}})}
             />
 
             <WeekdaySelector
                 selection={newItem.weekDays}
-                onSelect={(day, isChecked) => {
+                onSelect={(day: number, isChecked: boolean) => {
                     const weekDays = newItem.weekDays.slice(0);
                     weekDays[day] = isChecked;
                     setNewItem({...newItem, ...{weekDays}});

@@ -1,8 +1,13 @@
 import React, {useContext} from 'react';
+import {ThemeContext} from '../../themes';
 import './WeekdaySelector.less';
-import {ThemeContext} from '~/themes';
 
-export default function WeekdaySelector(props) {
+interface IWeekdaySelector {
+    selection: boolean[];
+    onSelect: Function;
+}
+
+export default function WeekdaySelector(props: IWeekdaySelector) {
     const {settings} = useContext(ThemeContext);
     const textTheme = {
         color: settings.color,

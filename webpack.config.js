@@ -8,17 +8,14 @@ module.exports = (env, argv) => {
         : '/';
 
     return {
-        entry: path.resolve(__dirname, './src/index.js'),
+        entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: '[name].[contenthash].js',
             publicPath,
         },
         resolve: {
-            alias: {
-                '~': path.resolve(__dirname, 'src'),
-            },
-            extensions: ['.js', '.less'],
+            extensions: ['.ts', '.tsx', '.js', '.less'],
         },
         module: {
             rules: [
@@ -26,6 +23,11 @@ module.exports = (env, argv) => {
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: ['babel-loader'],
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
+                    exclude: '/node_modules/',
                 },
                 {
                     test: /\.(css|less)$/,
@@ -72,9 +74,8 @@ module.exports = (env, argv) => {
                 percentBy: 'entries',
             }),
             new webpack.DefinePlugin({
-                'IS_PRODUCTION': JSON.stringify(argv.mode === 'production'),
+                IS_PRODUCTION: JSON.stringify(argv.mode === 'production'),
             }),
         ],
     };
-}
-
+};

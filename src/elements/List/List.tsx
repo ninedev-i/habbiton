@@ -1,10 +1,18 @@
-import React, {useContext} from 'react';
+import React, {useContext, SyntheticEvent} from 'react';
 import {useHistory} from 'react-router-dom';
-import {isShowHabit} from '~/helpers';
-import {ThemeContext} from '~/themes';
+import {isShowHabit} from '../../helpers';
+import {ThemeContext} from '../../themes';
+import {IHabit, IProgress} from '../../storage';
 import './List.less';
 
-export default function List(props) {
+interface IList {
+    items: IHabit[];
+    progress: IProgress;
+    currentDate: string;
+    increaseProgress: Function;
+}
+
+export default function List(props: IList) {
     const {items, progress, currentDate} = props;
     const {settings} = useContext(ThemeContext);
     const router = useHistory();
@@ -16,10 +24,9 @@ export default function List(props) {
         }
 
         const current = (currentProgress && currentProgress[item.key]) || 0;
-        let width = Math.round((current * 100) / item.countNumber);
-        width = width ? `${width}%` : 0;
+        const width = Math.round((current * 100) / item.countNumber);
         const progressTheme = {
-            width,
+            width: width ? `${width}%` : 0,
             background: settings.progressBg,
             color: settings.color,
         };
@@ -34,7 +41,7 @@ export default function List(props) {
             background: settings.color,
         };
 
-        const editItem = (ev, key) => {
+        const editItem = (ev: SyntheticEvent, key: number) => {
             ev.stopPropagation();
             router.push(`edit/${key}`);
         };
@@ -54,7 +61,7 @@ export default function List(props) {
                     <span>/</span>
                     <span>{item.countNumber}</span>
                 </div>
-                {current >= item.countNumber ? <div className="list-item__done" style={doneLineTheme}></div> : null}
+                {current >= item.countNumber && <div className="list-item__done" style={doneLineTheme} />}
                 <div
                     className="list-item__toolbar"
                     role="presentation"

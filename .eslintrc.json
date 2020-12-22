@@ -12,8 +12,12 @@
     "react/jsx-indent-props": [0, "first"],
     "object-curly-spacing": "off",
     "object-curly-newline": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js", ".ts", ".tsx"] }],
     "react/jsx-props-no-spreading": "off",
+    "react/no-unused-prop-types": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "jsx-a11y/label-has-associated-control": [ 2, {
       "labelAttributes": ["label"],
       "depth": 3
@@ -22,6 +26,11 @@
     "arrow-body-style": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "react/prop-types": "off"
-  }
+    "react/prop-types": "off",
+    "consistent-return": "off"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ]
 }
