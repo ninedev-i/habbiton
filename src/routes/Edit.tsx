@@ -66,6 +66,7 @@ export default function Edit(props: IEdit) {
                 inputId="countNumber"
                 label="How many times per day"
                 inputType="number"
+                placeholder=""
                 value={newItem.countNumber}
                 onChange={(countNumber: number) => setNewItem({...newItem, ...{countNumber}})}
             />

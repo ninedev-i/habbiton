@@ -1,7 +1,5 @@
 {
   "extends": [
-    "react-app",
-    "react-app/jest",
     "eslint-config-airbnb"
   ],
   "rules": {
@@ -29,6 +27,7 @@
     "react/prop-types": "off",
     "consistent-return": "off"
   },
+  "parser": "@typescript-eslint/parser",
   "plugins": [
     "react",
     "@typescript-eslint"

@@ -1,4 +1,5 @@
 import React, {createContext, useState} from 'react';
+import {keyframes} from 'styled-components';
 import {getTheme, saveTheme} from '../storage';
 
 export const ThemeContext = createContext({
@@ -6,6 +7,20 @@ export const ThemeContext = createContext({
     settings: null,
     toggleTheme: null,
 });
+
+export const constants = {
+    blueMain: '#7fd7e7',
+    accentColor: '#f58b79',
+    transition: '0.5s ease-out',
+    fadeIn: keyframes`
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    `,
+};
 
 export default function ThemeProvider(props: any) {
     const [theme, setTheme] = useState(getTheme());

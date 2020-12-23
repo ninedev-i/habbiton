@@ -12,14 +12,18 @@
         "@babel/core": "7.11.4",
         "@babel/preset-env": "7.11.0",
         "@babel/preset-react": "7.10.4",
+        "@typescript-eslint/eslint-plugin": "^2.6.1",
+        "@typescript-eslint/parser": "^2.6.1",
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
         "@types/react-router-dom": "^5.1.6",
+        "@types/styled-components": "^5.1.7",
         "@types/webpack": "4.41.25",
         "babel-loader": "8.1.0",
         "css-loader": "^5.0.1",
         "eslint": "7.2.0",
         "eslint-config-airbnb": "18.2.1",
+        "eslint-config-react-app": "^6.0.0",
         "eslint-plugin-import": "2.22.1",
         "eslint-plugin-jsx-a11y": "6.4.1",
         "eslint-plugin-react": "7.21.5",
@@ -40,6 +44,10 @@
         "react-dom": "^17.0.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
-        "simple-react-calendar": "^2.2.8"
+        "simple-react-calendar": "^2.2.8",
+        "styled-components": "^5.2.1"
+    },
+    "resolutions": {
+        "styled-components": "^5"
     }
 }

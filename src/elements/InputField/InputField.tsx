@@ -1,11 +1,37 @@
 import React, {ReactNode, useContext} from 'react';
+import styled from 'styled-components';
 import {ThemeContext} from '../../themes';
-import './InputField.less';
+
+const InputStyled = styled.input`
+    width: calc(100% - 14px);
+    background: ${({theme}) => theme.inputBg};
+    color: ${({theme}) => theme.color};
+    border: ${({theme}) => theme.inputBorder};
+    
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+`;
+
+const InputNumberContainer = styled.div`
+    margin: 0 6px;
+`;
+
+const LabelStyled = styled.label`
+    color: ${({theme}) => theme.color};
+`;
+
+const NumberContainer = styled.div`
+    width: 100px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+`;
 
 interface IInputField {
     inputId: string;
     inputType: string;
-    placeholder?: string;
+    placeholder: string;
     value: string|number;
     label: string;
     className: string;
@@ -13,16 +39,8 @@ interface IInputField {
 }
 
 export default function InputField(props: IInputField) {
-    const {settings} = useContext(ThemeContext);
     const {inputId, inputType, label, className, onChange} = props;
-
-    const textTheme = {
-        color: settings.color,
-    };
-    const inputTheme = {
-        background: settings.inputBg,
-        border: settings.inputBorder,
-    };
+    const {settings} = useContext(ThemeContext);
 
     const containerClass = `flex-column ${className}`;
 
@@ -43,13 +61,13 @@ export default function InputField(props: IInputField) {
             <Label
                 forId={inputId}
                 caption={label}
-                theme={textTheme}
+                theme={settings}
             />
             {inputType === 'number'
                 ? (
                     <ButtonWrapper changeHandler={changeHandler} {...props}>
                         <Input
-                            theme={{...inputTheme, ...textTheme}}
+                            theme={settings}
                             changeHandler={changeHandler}
                             {...props}
                         />
@@ -57,7 +75,7 @@ export default function InputField(props: IInputField) {
                 )
                 : (
                     <Input
-                        theme={{...inputTheme, ...textTheme}}
+                        theme={settings}
                         changeHandler={changeHandler}
                         {...props}
                     />
@@ -78,12 +96,12 @@ function Label({caption, forId, theme}: ILabel) {
     }
 
     return (
-        <label
+        <LabelStyled
             htmlFor={forId}
-            style={theme}
+            theme={theme}
         >
             {caption}
-        </label>
+        </LabelStyled>
     );
 }
 
@@ -94,10 +112,9 @@ interface IInput extends IInputField {
 
 function Input({inputId, inputType, placeholder, value, changeHandler, theme}: IInput) {
     return (
-        <input
+        <InputStyled
             id={inputId}
-            className="input"
-            style={theme}
+            theme={theme}
             type={inputType}
             placeholder={placeholder}
             value={value}
@@ -119,10 +136,10 @@ function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {
     };
 
     return (
-        <div className="flex-row input-number__container">
+        <NumberContainer>
             <button className="button-accented" type="button" onClick={() => changeValue()}>-</button>
-            <div className="input-number">{children}</div>
+            <InputNumberContainer>{children}</InputNumberContainer>
             <button className="button-accented" type="button" onClick={() => changeValue(true)}>+</button>
-        </div>
+        </NumberContainer>
     );
 }

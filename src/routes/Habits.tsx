@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
+import styled from 'styled-components';
 import List from '../elements/List/List';
 import DayProgress from '../elements/DayProgress/DayProgress';
 import DatePicker from '../elements/DatePicker/DatePicker';
 import {getProgress, saveProgress, IHabit} from '../storage';
 import {getFormattedDate} from '../helpers';
-import './Habits.less';
+
+const Calendar = styled.div`
+    width: 250px;
+    padding: 0 12px;
+`;
 
 interface IHabits {
     habits: IHabit[];
@@ -35,7 +40,7 @@ export default function Habits(props: IHabits) {
 
     return (
         <div className="flex-row">
-            <div className="habits-main">
+            <div className="flex-grow">
                 <DayProgress
                     items={habits}
                     progress={progress}
@@ -49,14 +54,14 @@ export default function Habits(props: IHabits) {
                     increaseProgress={increaseProgress}
                 />
             </div>
-            <div className="habits-calendar">
+            <Calendar>
                 <DatePicker
                     mode="single"
                     disableDaysOfWeek
                     selected={new Date(currentDay)}
                     setSelected={(selection: Date) => setCurrentDay(getFormattedDate(selection))}
                 />
-            </div>
+            </Calendar>
         </div>
     );
 }
