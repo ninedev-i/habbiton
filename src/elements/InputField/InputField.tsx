@@ -44,14 +44,17 @@ export default function InputField(props: IInputField) {
 
     const containerClass = `flex-column ${className}`;
 
-    const changeHandler = (value: string|number) => {
-        let output = value;
+    const changeHandler = (value: number) => {
+        let output;
         if (inputType === 'number') {
-            output = +output;
-
-            if (output <= 0) {
+            output = value;
+            if (output === 0) {
                 output = 1;
+            } else if (output < 0) {
+                output *= -1;
             }
+        } else {
+            output = value;
         }
         return onChange(output);
     };
@@ -69,6 +72,11 @@ export default function InputField(props: IInputField) {
                         <Input
                             theme={settings}
                             changeHandler={changeHandler}
+                            checkValue={(val: number) => {
+                                if (!val) {
+                                    return changeHandler(1);
+                                }
+                            }}
                             {...props}
                         />
                     </ButtonWrapper>
@@ -77,6 +85,7 @@ export default function InputField(props: IInputField) {
                     <Input
                         theme={settings}
                         changeHandler={changeHandler}
+                        checkValue={() => {}}
                         {...props}
                     />
                 )}
@@ -108,9 +117,10 @@ function Label({caption, forId, theme}: ILabel) {
 interface IInput extends IInputField {
     theme: {};
     changeHandler: Function;
+    checkValue: Function;
 }
 
-function Input({inputId, inputType, placeholder, value, changeHandler, theme}: IInput) {
+function Input({inputId, inputType, placeholder, value, changeHandler, checkValue, theme}: IInput) {
     return (
         <InputStyled
             id={inputId}
@@ -120,6 +130,7 @@ function Input({inputId, inputType, placeholder, value, changeHandler, theme}: I
             value={value}
             min={1}
             onChange={(ev) => changeHandler(ev.target.value)}
+            onBlur={(ev) => checkValue(ev.target.value, inputType)}
         />
     );
 }

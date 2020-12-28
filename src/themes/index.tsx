@@ -5,7 +5,7 @@ import {getTheme, saveTheme} from '../storage';
 export const ThemeContext = createContext({
     theme: 'light',
     settings: null,
-    toggleTheme: null,
+    toggleTheme: () => {},
 });
 
 export const constants = {
@@ -54,5 +54,5 @@ export default function ThemeProvider(props: any) {
     const settings = themes[theme];
     const value = {theme, toggleTheme, settings};
 
-    return <ThemeContext.Provider value={value} {...props} setTheme={setTheme} />;
+    return <ThemeContext.Provider value={value} {...props} />;
 }

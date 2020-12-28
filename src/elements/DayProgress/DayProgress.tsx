@@ -12,6 +12,7 @@ const Title = styled.div`
 `;
 
 const Bar = styled.div`
+    position: relative;
     width: 100%;
     height: 4px;
     border-radius: 4px;
@@ -19,8 +20,8 @@ const Bar = styled.div`
     overflow: hidden;
 `;
 
-const Percents = styled.div<{width: number}>`
-    width: ${({width}) => (width ? `${width}%` : 0)};
+const Percents = styled.div<{progressWidth: number}>`
+    width: ${({progressWidth}) => (progressWidth ? `${progressWidth}%` : 0)};
     background:${constants.accentColor};
     transition: ${constants.transition};
     height: inherit;
@@ -47,8 +48,8 @@ export default function DayProgress(props: IDayProgress) {
     return (
         <div className="flex-column">
             <Title theme={settings}>Day progress</Title>
-            <Bar>
-                <Percents width={width} />
+            <Bar role="progressbar">
+                <Percents progressWidth={width} data-testid="progress" />
             </Bar>
         </div>
     );
