@@ -1,10 +1,11 @@
-import React, {Suspense, lazy, useContext, useState, useEffect, ReactNode} from 'react';
-import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
+import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
+import {Route, Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import {getHabits, saveHabits, IHabit} from './storage';
 import {getFormattedDate} from './helpers';
-import ThemeProvider, {ThemeContext} from './themes';
+import {ThemeContext} from './themes';
 import Header from './elements/Header/Header';
+import Wrapper from './elements/Wrapper/Wrapper';
 import './index.less';
 
 const Habits = lazy(() => import('./routes/Habits'));
@@ -75,16 +76,9 @@ function App() {
     );
 }
 
-function RouterWrapper(props: {children: ReactNode}) {
-    const IS_PRODUCTION = false;
-    return IS_PRODUCTION ? <HashRouter {...props} /> : <BrowserRouter {...props} />;
-}
-
 ReactDOM.render(
-    <RouterWrapper>
-        <ThemeProvider>
-            <App />
-        </ThemeProvider>
-    </RouterWrapper>,
+    <Wrapper>
+        <App />
+    </Wrapper>,
     document.getElementById('root'),
 );

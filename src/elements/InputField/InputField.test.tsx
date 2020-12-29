@@ -4,8 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
 import InputField from './InputField';
 
-const getRandomNumber = (min: number, max: number) => Math.round(Math.random() * (max - min) + min);
-
 const NumberInput = ({val = 1}) => {
     const [numberValue, setNumberValue] = useState(val);
 
@@ -22,36 +20,34 @@ const NumberInput = ({val = 1}) => {
     );
 };
 
-describe('<InputField /> tests', () => {
-    const renderNumberField = (val?: number) => {
-        render(
-            <NumberInput val={val} />,
-        );
-    };
+const renderNumberInput = (val?: number) => {
+    render(<NumberInput val={val} />);
+};
 
+describe('<InputField /> tests', () => {
     test('Check initial state', () => {
-        const val = getRandomNumber(1, 99);
-        renderNumberField(val);
+        const val = 15;
+        renderNumberInput(val);
         expect(screen.getByLabelText('Test label')).toHaveValue(val);
     });
 
     test('Is label click focusing input', () => {
-        renderNumberField(6);
+        renderNumberInput(6);
         userEvent.click(screen.getByText('Test label'));
         expect(document.activeElement.id).toBe('testId');
     });
 
     test('Input negative value', () => {
-        renderNumberField(6);
-        const inputedValue = getRandomNumber(-99, -1);
+        renderNumberInput(6);
+        const negativeValue = -26;
         const input = screen.getByLabelText('Test label');
-        userEvent.type(input, `/{del/}${inputedValue}`);
-        expect(input).toHaveValue(Math.abs(inputedValue));
+        userEvent.type(input, `/{del/}${negativeValue}`);
+        expect(input).toHaveValue(Math.abs(negativeValue));
     });
 
     test('Change value on button click', () => {
         const initValue = 6;
-        renderNumberField(initValue);
+        renderNumberInput(initValue);
         const input = screen.getByLabelText('Test label');
         userEvent.click(screen.getByText('-'));
         expect(input).toHaveValue(initValue - 1);

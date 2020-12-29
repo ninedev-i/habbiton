@@ -3,9 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-    const publicPath = argv.mode === 'production'
-        ? 'https://ninedev-i.github.io/habbiton/'
-        : '/';
+    const publicPath = argv.mode === 'production' ? './' : '/';
 
     return {
         entry: path.resolve(__dirname, './src/index.tsx'),
@@ -14,6 +12,7 @@ module.exports = (env, argv) => {
             filename: '[name].[contenthash].js',
             publicPath,
         },
+        target: ['web', 'es2017'],
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.less'],
         },
@@ -44,6 +43,7 @@ module.exports = (env, argv) => {
             historyApiFallback: true,
         },
         optimization: {
+            minimize: true,
             runtimeChunk: 'single',
             splitChunks: {
                 chunks: 'all',

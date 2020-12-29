@@ -15,47 +15,54 @@ const renderDayProgress = (habits: IHabit[], progress: IProgress, currentDate: s
     );
 };
 
-const getRandomData = () => {
-    const date = (() => {
-        const startDate = new Date(2018, 0, 1).getTime();
-        const endDate = new Date(2020, 0, 1).getTime();
-        let timestamp = Math.round(Math.random() * (endDate - startDate));
-        timestamp += startDate;
-        return getFormattedDate(new Date(timestamp));
-    })();
+const getData = (countNumber: number) => {
+    const today = new Date();
+    const currentDate = getFormattedDate(new Date());
+    const nextDate = getFormattedDate(new Date(today.setDate(today.getDate() + 1)));
+
+    const progress: IProgress = new Map();
+    progress.set(currentDate, {0: countNumber});
+    progress.set(nextDate, {0: 50});
 
     return {
-        date,
+        currentDate,
+        nextDate,
+        progress,
         habits: [{
             key: 0,
             title: 'Testing habit',
-            dateRange: [date, null],
+            dateRange: [currentDate, null],
             weekDays: [true, true, true, true, true, true, true],
-            countNumber: 6,
+            countNumber: 100,
         }],
     };
 };
 
-describe('<DayProgress /> tests', () => {
-    const {date, habits} = getRandomData();
-    const randomCountNumber: number = 3;
-    const progress: IProgress = new Map();
-    progress.set(date, {0: randomCountNumber});
+/**
+ * @param currentCount – current counter's value
+ * @param totalCount – max counter's value
+ */
+const getPercentWidth = (currentCount: number, totalCount: number) => Math.round((currentCount * 100) / totalCount);
 
-    renderDayProgress(habits, progress, date);
+/**
+ * Real width of progress in percents
+ */
+const getCurrentProgressWidth = () => parseInt(getComputedStyle(screen.getByTestId('progress')).width, 10);
+
+describe('<DayProgress /> tests', () => {
+    const countNumber = 60;
+    const {habits, currentDate, nextDate, progress} = getData(countNumber);
 
     test('Check initial progress', () => {
-        const habitProgressWidth = Math.round((randomCountNumber * 100) / habits[0].countNumber);
-        const divWidth = parseInt(getComputedStyle(screen.getByTestId('progress')).width, 10);
+        renderDayProgress(habits, progress, currentDate);
+        const habitProgressWidth = getPercentWidth(countNumber, habits[0].countNumber);
 
-        expect(divWidth).toBe(habitProgressWidth);
+        expect(getCurrentProgressWidth()).toBe(habitProgressWidth);
     });
 
-    test('Change progress', () => {
-        progress.set(date, {0: 6});
-        renderDayProgress(habits, progress, date);
+    test('Check progress in another day', () => {
+        renderDayProgress(habits, progress, nextDate);
 
-        const divWidth = parseInt(getComputedStyle(screen.getByTestId('progress')).width, 10);
-        expect(divWidth).toBe(100);
+        expect(getCurrentProgressWidth()).toBe(50);
     });
 });

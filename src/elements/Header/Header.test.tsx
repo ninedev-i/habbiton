@@ -1,23 +1,21 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
-import ThemeProvider from '../../themes';
 import Header from './Header';
+import Wrapper from '../Wrapper/Wrapper';
 
 describe('<Header /> tests', () => {
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <ThemeProvider>
-                    <Header />
-                    <Switch>
-                        <Route exact path="/">Home</Route>
-                        <Route exact path="/add">Add</Route>
-                    </Switch>
-                </ThemeProvider>
-            </BrowserRouter>,
+            <Wrapper>
+                <Header />
+                <Switch>
+                    <Route exact path="/">Home</Route>
+                    <Route exact path="/add">Add</Route>
+                </Switch>
+            </Wrapper>,
         );
     });
 
