@@ -6,6 +6,7 @@ This is a habit tracker application with web notifications.
 ```
 git clone https://github.com/ninedev-i/habbiton.git
 npm install
+docker-compose up
 npm run dev 
 ```
 
