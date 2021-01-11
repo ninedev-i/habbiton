@@ -21,7 +21,7 @@ export default function Habits(props: IHabits) {
     const {habits, currentDay, setCurrentDay} = props;
     const [progress, setProgress] = useState(getProgress());
 
-    const increaseProgress = (key: number, day = currentDay) => {
+    const increaseProgress = (key: string, day = currentDay) => {
         const clonedProgress = new Map(progress);
         if (!progress.get(day)) {
             clonedProgress.set(day, {});
@@ -29,7 +29,7 @@ export default function Habits(props: IHabits) {
         }
 
         const habitProgress = clonedProgress.get(day);
-        const maxCounter = habits.find((item) => item.key === key).countNumber;
+        const maxCounter = habits.find((item) => item._id === key).countNumber;
         if (!habitProgress[key] || habitProgress[key] < maxCounter) {
             habitProgress[key] = habitProgress[key] ? habitProgress[key] + 1 : 1;
             clonedProgress.set(day, habitProgress);

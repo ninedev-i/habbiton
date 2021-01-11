@@ -17,7 +17,7 @@ export default function Edit(props: IEdit) {
     const habitId = useParams<{id: string}>().id;
     let initialItem;
     if (habitId) {
-        initialItem = habits.find((item) => item.key === +habitId);
+        initialItem = habits.find((item) => item._id === habitId);
     } else {
         initialItem = {
             title: '',
@@ -30,8 +30,7 @@ export default function Edit(props: IEdit) {
     const [newItem, setNewItem] = useState(initialItem);
 
     const handleEdit = () => {
-        const key = habitId || +habits.sort((a, b) => a.key - b.key).reverse()[0].key + 1;
-        const addedItem = {...newItem, ...{key: +key}};
+        const addedItem = {...newItem};
         updateHabits(addedItem, habitId);
         router.push('/');
     };

@@ -1,17 +1,28 @@
+import axios from 'axios';
+
+const data = axios.create({
+    baseURL: 'http://localhost:3000',
+});
+
 export interface IHabit {
-    key: number;
+    _id: string;
     title: string;
     dateRange: string[];
     weekDays?: boolean[];
     countNumber: number;
 }
 
-export const getHabits = (initHabit: IHabit[] = []): IHabit[] => {
-    const storage = localStorage.getItem('habits');
-    return storage ? JSON.parse(storage) : initHabit;
+export const getHabits = (): Promise<IHabit[]> => {
+    return data
+        .get<IHabit[]>('/habits')
+        .then((res) => res.data);
 };
 
-export const saveHabits = (habits: IHabit[]): void => localStorage.setItem('habits', JSON.stringify(habits));
+export const saveHabits = (habit: IHabit): Promise<IHabit> => {
+    return data
+        .post(`/habits/${habit._id || ''}`, habit)
+        .then((res) => res.data);
+};
 
 type ITheme = 'light'|'dark';
 export const getTheme = (): ITheme => localStorage.getItem('theme') as ITheme || 'light';

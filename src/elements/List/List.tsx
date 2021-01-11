@@ -98,7 +98,7 @@ export default function List(props: IList) {
     const router = useHistory();
     const currentProgress = progress.get(currentDate);
 
-    const editItem = (ev: SyntheticEvent, key: number) => {
+    const editItem = (ev: SyntheticEvent, key: string) => {
         ev.stopPropagation();
         router.push(`edit/${key}`);
     };
@@ -108,15 +108,15 @@ export default function List(props: IList) {
             return;
         }
 
-        const current = (currentProgress && currentProgress[item.key]) || 0;
+        const current = (currentProgress && currentProgress[item._id]) || 0;
         const width = Math.round((current * 100) / item.countNumber);
 
         return (
             <ListItem
                 theme={settings}
-                key={item.key.toString()}
+                key={item._id}
                 role="presentation"
-                onClick={() => increaseProgress(item.key)}
+                onClick={() => increaseProgress(item._id)}
             >
                 <Progress
                     theme={settings}
@@ -140,7 +140,7 @@ export default function List(props: IList) {
                     className="list-item__toolbar"
                     role="presentation"
                     theme={settings}
-                    onClick={(ev) => editItem(ev, item.key)}
+                    onClick={(ev) => editItem(ev, item._id)}
                 >
                     Edit
                 </Toolbar>

@@ -15,6 +15,7 @@
     "react/no-unused-prop-types": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     "no-use-before-define": "off",
+    "no-underscore-dangle": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "jsx-a11y/label-has-associated-control": [ 2, {
       "labelAttributes": ["label"],

@@ -11,21 +11,25 @@ import './index.less';
 const Habits = lazy(() => import('./routes/Habits'));
 const Edit = lazy(() => import('./routes/Edit'));
 
+const habitsLazyLoading = getHabits();
+
 function App() {
     const {settings} = useContext(ThemeContext);
-    const initialItem = getHabits();
-    const [habits, setHabits] = useState(initialItem);
+    const [habits, setHabits] = useState([]);
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
 
     useEffect(() => {
-        saveHabits(habits);
-    }, [habits]);
+        habitsLazyLoading
+            .then((data) => setHabits(data));
+    }, []);
 
-    const updateHabits = (updatedItem: IHabit, key: number) => {
-        const editedHabits = key
-            ? habits.slice(0).map((item) => (item.key === +key ? updatedItem : item))
-            : [...habits, updatedItem];
-        setHabits(editedHabits);
+    const updateHabits = (updatedItem: IHabit, key: string) => {
+        saveHabits(updatedItem).then((data) => {
+            const editedHabits = key
+                ? habits.slice(0).map((item) => (item._id === key ? data : item))
+                : [...habits, data];
+            setHabits(editedHabits);
+        });
     };
 
     const wrapperTheme = {
@@ -55,7 +59,7 @@ function App() {
                             render={() => (
                                 <Edit
                                     habits={habits}
-                                    updateHabits={(item: IHabit, habitId: number) => updateHabits(item, habitId)}
+                                    updateHabits={(item: IHabit, habitId: string) => updateHabits(item, habitId)}
                                 />
                             )}
                         />
@@ -65,7 +69,7 @@ function App() {
                             render={() => (
                                 <Edit
                                     habits={habits}
-                                    updateHabits={(item: IHabit, habitId: number) => updateHabits(item, habitId)}
+                                    updateHabits={(item: IHabit, habitId: string) => updateHabits(item, habitId)}
                                 />
                             )}
                         />
