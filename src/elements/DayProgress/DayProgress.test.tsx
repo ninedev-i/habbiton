@@ -16,20 +16,16 @@ const renderDayProgress = (habits: IHabit[], progress: IProgress, currentDate: s
 };
 
 const getData = (countNumber: number) => {
-    const today = new Date();
     const currentDate = getFormattedDate(new Date());
-    const nextDate = getFormattedDate(new Date(today.setDate(today.getDate() + 1)));
-
-    const progress: IProgress = new Map();
-    progress.set(currentDate, {0: countNumber});
-    progress.set(nextDate, {0: 50});
+    const habitId = '0';
+    const progress = new Map();
+    progress.set(habitId, {date: currentDate, habitId, progress: countNumber});
 
     return {
         currentDate,
-        nextDate,
         progress,
         habits: [{
-            key: 0,
+            _id: habitId,
             title: 'Testing habit',
             dateRange: [currentDate, null],
             weekDays: [true, true, true, true, true, true, true],
@@ -51,18 +47,12 @@ const getCurrentProgressWidth = () => parseInt(getComputedStyle(screen.getByTest
 
 describe('<DayProgress /> tests', () => {
     const countNumber = 60;
-    const {habits, currentDate, nextDate, progress} = getData(countNumber);
+    const {habits, currentDate, progress} = getData(countNumber);
 
     test('Check initial progress', () => {
         renderDayProgress(habits, progress, currentDate);
         const habitProgressWidth = getPercentWidth(countNumber, habits[0].countNumber);
 
         expect(getCurrentProgressWidth()).toBe(habitProgressWidth);
-    });
-
-    test('Check progress in another day', () => {
-        renderDayProgress(habits, progress, nextDate);
-
-        expect(getCurrentProgressWidth()).toBe(50);
     });
 });

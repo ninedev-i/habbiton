@@ -6,4 +6,5 @@ export const serviceUrl = `${server}/${database}`;
 export const connectionSettings = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
 };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import List from '../elements/List/List';
 import DayProgress from '../elements/DayProgress/DayProgress';
@@ -19,22 +19,31 @@ interface IHabits {
 
 export default function Habits(props: IHabits) {
     const {habits, currentDay, setCurrentDay} = props;
-    const [progress, setProgress] = useState(getProgress());
+    const [progress, setProgress] = useState(new Map());
+
+    useEffect(() => {
+        getProgress(currentDay)
+            .then((res) => setProgress(res));
+    }, [currentDay]);
 
     const increaseProgress = (key: string, day = currentDay) => {
         const clonedProgress = new Map(progress);
-        if (!progress.get(day)) {
-            clonedProgress.set(day, {});
+        if (!progress.get(key)) {
+            clonedProgress.set(key, {progress: 0, date: day, habitId: key});
             setProgress(clonedProgress);
         }
 
-        const habitProgress = clonedProgress.get(day);
+        let habitProgress = clonedProgress.get(key).progress;
         const maxCounter = habits.find((item) => item._id === key).countNumber;
-        if (!habitProgress[key] || habitProgress[key] < maxCounter) {
-            habitProgress[key] = habitProgress[key] ? habitProgress[key] + 1 : 1;
-            clonedProgress.set(day, habitProgress);
-            setProgress(clonedProgress);
-            saveProgress(clonedProgress);
+        if (!habitProgress || habitProgress < maxCounter) {
+            habitProgress = habitProgress ? habitProgress + 1 : 1;
+            clonedProgress.set(key, {...clonedProgress.get(key), ...{progress: habitProgress}});
+            saveProgress(clonedProgress.get(key))
+                .then((res) => {
+                    // add _id field if new one
+                    clonedProgress.set(key, res);
+                    setProgress(clonedProgress);
+                });
         }
     };
 

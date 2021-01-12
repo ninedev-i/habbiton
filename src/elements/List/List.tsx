@@ -96,7 +96,6 @@ export default function List(props: IList) {
     const {items, progress, currentDate, increaseProgress} = props;
     const {settings} = useContext(ThemeContext);
     const router = useHistory();
-    const currentProgress = progress.get(currentDate);
 
     const editItem = (ev: SyntheticEvent, key: string) => {
         ev.stopPropagation();
@@ -108,7 +107,7 @@ export default function List(props: IList) {
             return;
         }
 
-        const current = (currentProgress && currentProgress[item._id]) || 0;
+        const current = progress.get(item._id)?.progress || 0;
         const width = Math.round((current * 100) / item.countNumber);
 
         return (

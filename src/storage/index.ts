@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {IProgressData} from '../../service/models/Progress';
 
 const data = axios.create({
     baseURL: 'http://localhost:3000',
@@ -31,11 +32,19 @@ export const saveTheme = (chosenTheme: ITheme) => localStorage.setItem('theme', 
 
 export type IProgress = Map<string, {[habitNumber: string]: number }>;
 
-export const getProgress = (): IProgress => {
-    const progress = localStorage.getItem('progress');
-    return progress ? new Map(JSON.parse(progress)) : new Map();
+export const getProgress = (date: string): Promise<IProgress> => {
+    return data
+        .get(`/progress/${date}`)
+        .then((res) => {
+            const output = new Map();
+            res.data.forEach((item: IProgressData) => output.set(item.habitId, item));
+
+            return output;
+        });
 };
 
-export const saveProgress = (progress: IProgress) => {
-    localStorage.setItem('progress', JSON.stringify(Array.from(progress.entries())));
+export const saveProgress = (progress: IProgressData) => {
+    return data
+        .post(`/progress/${progress._id || ''}`, progress)
+        .then((res) => res.data);
 };

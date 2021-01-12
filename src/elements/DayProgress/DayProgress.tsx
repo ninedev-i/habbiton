@@ -36,11 +36,10 @@ interface IDayProgress {
 export default function DayProgress(props: IDayProgress) {
     const {progress, items, currentDate} = props;
     const {settings} = useContext(ThemeContext);
-    const currentProgress = progress.get(currentDate) || {};
 
     let current = 0;
-    Object.keys(currentProgress).forEach((key) => {
-        current += currentProgress[key];
+    progress.forEach((item) => {
+        current += item.progress;
     });
     const total = items.reduce((a, b) => a + (b && isShowHabit(b, currentDate) ? +b.countNumber : 0), 0);
     const width = Math.round((current * 100) / total);

@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import pino from 'pino';
 import HabitModel, {IHabit} from './models/Habits';
+import ProgressModel, {IProgressData} from './models/Progress';
 import {serviceUrl, connectionSettings} from './mongoSetup';
 
 const port = 3000;
@@ -24,7 +25,7 @@ mongoose
         app.post('/habits/:id', (req, res) => {
             const habit = req.body;
             return HabitModel
-                .findByIdAndUpdate({_id: habit._id}, habit, {new: true})
+                .findOneAndUpdate({_id: habit._id}, habit, {new: true})
                 .then((data) => res.send(data))
                 .catch(({stack, message}: Error) => logger.error({stack}, message));
         });
@@ -33,6 +34,28 @@ mongoose
             return new HabitModel(req.body)
                 .save()
                 .then((data: IHabit) => res.send(data))
+                .catch(({stack, message}: Error) => logger.error({stack}, message));
+        });
+
+        app.get('/progress/:date', (req, res) => {
+            ProgressModel
+                .find({date: req.params.date})
+                .then((data: IProgressData[]) => res.json(data))
+                .catch(({stack, message}: Error) => logger.error({stack}, message));
+        });
+
+        app.post('/progress', (req, res) => {
+            return new ProgressModel(req.body)
+                .save()
+                .then((data: IProgressData) => res.send(data))
+                .catch(({stack, message}: Error) => logger.error({stack}, message));
+        });
+
+        app.post('/progress/:id', (req, res) => {
+            const progress = req.body;
+            return ProgressModel
+                .findOneAndUpdate({_id: req.params.id}, progress, {new: true})
+                .then((data) => res.send(data))
                 .catch(({stack, message}: Error) => logger.error({stack}, message));
         });
 
