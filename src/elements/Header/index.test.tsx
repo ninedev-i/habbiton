@@ -3,8 +3,8 @@ import {Route, Switch} from 'react-router-dom';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
-import Header from './Header';
-import Wrapper from '../Wrapper/Wrapper';
+import {Header} from './index';
+import {Wrapper} from '../Wrapper';
 
 describe('<Header /> tests', () => {
     beforeEach(() => {

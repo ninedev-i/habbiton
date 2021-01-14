@@ -7,7 +7,8 @@ This is a habit tracker application with web notifications.
 git clone https://github.com/ninedev-i/habbiton.git
 npm install
 docker-compose up
-npm run dev 
+npm run server-watch
+npm run dev
 ```
 
 It starts a dev server on [localhost:8080](http://localhost:8080).

@@ -1,17 +1,30 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
+import styled from 'styled-components';
+import {observer} from 'mobx-react-lite';
 import {useHistory, useParams} from 'react-router-dom';
-import InputField from '../elements/InputField/InputField';
-import WeekdaySelector from '../elements/WeekdaySelector/WeekdaySelector';
+import {InputField} from '../elements/InputField';
+import {WeekdaySelector} from '../elements/WeekdaySelector';
 import {getFormattedDate} from '../helpers';
-import {ThemeContext} from '../themes';
 import {IHabit} from '../storage';
+
+const Container = styled.div`
+    background: ${(props) => props.theme.contentBg};
+`;
+
+const Title = styled.h1`
+    color: ${(props) => props.theme.color};
+`;
+
+const SaveButton = styled.button`
+  color: ${(props) => props.theme.color};
+`;
 
 interface IEdit {
     habits: IHabit[];
     updateHabits: Function;
 }
 
-export default function Edit(props: IEdit) {
+const Edit = observer((props: IEdit) => {
     const router = useHistory();
     const {habits, updateHabits} = props;
     const habitId = useParams<{id: string}>().id;
@@ -31,24 +44,13 @@ export default function Edit(props: IEdit) {
 
     const handleEdit = () => {
         const addedItem = {...newItem};
-        updateHabits(addedItem, habitId);
-        router.push('/');
-    };
-
-    const {settings} = useContext(ThemeContext);
-    const editTheme = {
-        background: settings.contentBg,
-    };
-    const textTheme = {
-        color: settings.color,
+        updateHabits(addedItem, habitId)
+            .then(() => router.push('/'));
     };
 
     return (
-        <div className="block flex-column margin-bottom" style={editTheme}>
-            <h1 style={textTheme}>
-                {habitId ? 'Edit ' : 'Add new '}
-                habit
-            </h1>
+        <Container className="block flex-column margin-bottom">
+            <Title>{habitId ? 'Edit habit' : 'Add new habit'}</Title>
 
             <InputField
                 className="margin-bottom"
@@ -88,15 +90,16 @@ export default function Edit(props: IEdit) {
                     {habitId ? 'Save' : 'Add'}
                 </button>
 
-                <button
+                <SaveButton
                     type="button"
                     className="button-unaccented margin-left"
-                    style={textTheme}
                     onClick={() => router.push('/')}
                 >
                     Cancel
-                </button>
+                </SaveButton>
             </div>
-        </div>
+        </Container>
     );
-}
+});
+
+export default Edit;

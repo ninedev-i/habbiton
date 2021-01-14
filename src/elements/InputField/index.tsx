@@ -1,46 +1,10 @@
-import React, {ReactNode, useContext} from 'react';
-import styled from 'styled-components';
-import {ThemeContext} from '../../themes';
+import React from 'react';
+import {observer} from 'mobx-react-lite';
+import {LabelStyled, InputStyled, InputNumberContainer, NumberContainer} from './styled';
+import {IInputField, ILabel, IInput, IButtonWrapper} from './interface';
 
-const InputStyled = styled.input`
-    width: calc(100% - 14px);
-    background: ${({theme}) => theme.inputBg};
-    color: ${({theme}) => theme.color};
-    border: ${({theme}) => theme.inputBorder};
-    
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-`;
-
-const InputNumberContainer = styled.div`
-    margin: 0 6px;
-`;
-
-const LabelStyled = styled.label`
-    color: ${({theme}) => theme.color};
-`;
-
-const NumberContainer = styled.div`
-    width: 100px;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: row;
-`;
-
-interface IInputField {
-    inputId: string;
-    inputType: string;
-    placeholder: string;
-    value: string|number;
-    label: string;
-    className: string;
-    onChange: Function;
-}
-
-export default function InputField(props: IInputField) {
+export const InputField = observer((props: IInputField) => {
     const {inputId, inputType, label, className, onChange} = props;
-    const {settings} = useContext(ThemeContext);
 
     const containerClass = `flex-column ${className}`;
 
@@ -64,13 +28,11 @@ export default function InputField(props: IInputField) {
             <Label
                 forId={inputId}
                 caption={label}
-                theme={settings}
             />
             {inputType === 'number'
                 ? (
                     <ButtonWrapper changeHandler={changeHandler} {...props}>
                         <Input
-                            theme={settings}
                             changeHandler={changeHandler}
                             checkValue={(val: number) => {
                                 if (!val) {
@@ -83,7 +45,6 @@ export default function InputField(props: IInputField) {
                 )
                 : (
                     <Input
-                        theme={settings}
                         changeHandler={changeHandler}
                         checkValue={() => {}}
                         {...props}
@@ -91,15 +52,9 @@ export default function InputField(props: IInputField) {
                 )}
         </div>
     );
-}
+});
 
-interface ILabel {
-    caption: string;
-    forId: string;
-    theme: {};
-}
-
-function Label({caption, forId, theme}: ILabel) {
+function Label({caption, forId}: ILabel) {
     if (!caption) {
         return;
     }
@@ -107,24 +62,16 @@ function Label({caption, forId, theme}: ILabel) {
     return (
         <LabelStyled
             htmlFor={forId}
-            theme={theme}
         >
             {caption}
         </LabelStyled>
     );
 }
 
-interface IInput extends IInputField {
-    theme: {};
-    changeHandler: Function;
-    checkValue: Function;
-}
-
-function Input({inputId, inputType, placeholder, value, changeHandler, checkValue, theme}: IInput) {
+function Input({inputId, inputType, placeholder, value, changeHandler, checkValue}: IInput) {
     return (
         <InputStyled
             id={inputId}
-            theme={theme}
             type={inputType}
             placeholder={placeholder}
             value={value}
@@ -133,12 +80,6 @@ function Input({inputId, inputType, placeholder, value, changeHandler, checkValu
             onBlur={(ev) => checkValue(ev.target.value, inputType)}
         />
     );
-}
-
-interface IButtonWrapper {
-    value: string|number;
-    changeHandler: Function;
-    children: ReactNode;
 }
 
 function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {

@@ -1,8 +1,7 @@
 import React from 'react';
 import Calendar from 'simple-react-calendar';
 // import Day from 'simple-react-calendar/lib/RenderPropsComponents/Day';
-
-import './DatePicker.less';
+import './index.less';
 
 interface IDatePicker {
     mode: string;
@@ -11,7 +10,7 @@ interface IDatePicker {
     setSelected: Function;
 }
 
-export default function DatePicker(props: IDatePicker) {
+export const DatePicker = (props: IDatePicker) => {
     const {mode, selected, setSelected, disableDaysOfWeek} = props;
 
     return (
@@ -25,7 +24,7 @@ export default function DatePicker(props: IDatePicker) {
             onSelect={(selection: IDatePicker) => setSelected(selection)}
         />
     );
-}
+};
 
 // function DayAccented(/* props: IDatePicker */) {
 //     const {ISODate} = props;

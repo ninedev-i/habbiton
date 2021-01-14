@@ -1,11 +1,12 @@
-import React, {Suspense, lazy, useContext, useState, useEffect} from 'react';
+import React, {Suspense, lazy, useState, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
+import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import {getHabits, saveHabits, IHabit} from './storage';
 import {getFormattedDate} from './helpers';
-import {ThemeContext} from './themes';
-import Header from './elements/Header/Header';
-import Wrapper from './elements/Wrapper/Wrapper';
+import {Header} from './elements/Header';
+import {Wrapper} from './elements/Wrapper';
 import './index.less';
 
 const Habits = lazy(() => import('./routes/Habits'));
@@ -13,8 +14,11 @@ const Edit = lazy(() => import('./routes/Edit'));
 
 const habitsLazyLoading = getHabits();
 
-function App() {
-    const {settings} = useContext(ThemeContext);
+const ContentWrapper = styled.div`
+    background: ${(props) => props.theme.background};
+`;
+
+const App = observer(() => {
     const [habits, setHabits] = useState([]);
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
 
@@ -24,7 +28,7 @@ function App() {
     }, []);
 
     const updateHabits = (updatedItem: IHabit, key: string) => {
-        saveHabits(updatedItem).then((data) => {
+        return saveHabits(updatedItem).then((data) => {
             const editedHabits = key
                 ? habits.slice(0).map((item) => (item._id === key ? data : item))
                 : [...habits, data];
@@ -32,14 +36,10 @@ function App() {
         });
     };
 
-    const wrapperTheme = {
-        background: settings.background,
-    };
-
     return (
         <>
             <Header />
-            <div className="wrapper" style={wrapperTheme}>
+            <ContentWrapper className="wrapper">
                 <Suspense fallback={<div>Loading…</div>}>
                     <Switch>
                         <Route
@@ -75,10 +75,10 @@ function App() {
                         />
                     </Switch>
                 </Suspense>
-            </div>
+            </ContentWrapper>
         </>
     );
-}
+});
 
 ReactDOM.render(
     <Wrapper>

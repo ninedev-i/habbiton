@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {getFormattedDate} from '../../helpers';
-import DayProgress from './DayProgress';
+import {DayProgress} from './index';
 import {IHabit, IProgress} from '../../storage';
 
 const renderDayProgress = (habits: IHabit[], progress: IProgress, currentDate: string) => {

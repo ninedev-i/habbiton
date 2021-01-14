@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import List from '../elements/List/List';
-import DayProgress from '../elements/DayProgress/DayProgress';
-import DatePicker from '../elements/DatePicker/DatePicker';
+import {List} from '../elements/List';
+import {DayProgress} from '../elements/DayProgress';
+import {DatePicker} from '../elements/DatePicker';
 import {getProgress, saveProgress, IHabit} from '../storage';
 import {getFormattedDate} from '../helpers';
 

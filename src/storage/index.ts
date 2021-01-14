@@ -25,11 +25,6 @@ export const saveHabits = (habit: IHabit): Promise<IHabit> => {
         .then((res) => res.data);
 };
 
-type ITheme = 'light'|'dark';
-export const getTheme = (): ITheme => localStorage.getItem('theme') as ITheme || 'light';
-
-export const saveTheme = (chosenTheme: ITheme) => localStorage.setItem('theme', chosenTheme);
-
 export type IProgress = Map<string, {[habitNumber: string]: number }>;
 
 export const getProgress = (date: string): Promise<IProgress> => {
