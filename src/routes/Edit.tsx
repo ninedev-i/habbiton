@@ -5,18 +5,16 @@ import {useHistory, useParams} from 'react-router-dom';
 import {InputField} from '../elements/InputField';
 import {WeekdaySelector} from '../elements/WeekdaySelector';
 import {getFormattedDate} from '../helpers';
+import {Button} from '../elements/Button';
+import {Box} from '../elements/Box';
 import {IHabit} from '../storage';
 
-const Container = styled.div`
+const Container = styled(Box)`
     background: ${(props) => props.theme.contentBg};
 `;
 
-const Title = styled.h1`
+const TextComponent = styled.div`
     color: ${(props) => props.theme.color};
-`;
-
-const SaveButton = styled.button`
-  color: ${(props) => props.theme.color};
 `;
 
 interface IEdit {
@@ -49,11 +47,17 @@ const Edit = observer((props: IEdit) => {
     };
 
     return (
-        <Container className="block flex-column margin-bottom">
-            <Title>{habitId ? 'Edit habit' : 'Add new habit'}</Title>
+        <Container
+            flex
+            column
+            boxShadow
+            margin="0 0 12px 0"
+            padding="12px"
+            borderRadius="6px"
+        >
+            <TextComponent as="h1">{habitId ? 'Edit habit' : 'Add new habit'}</TextComponent>
 
             <InputField
-                className="margin-bottom"
                 inputId="caption"
                 label="Caption"
                 placeholder="Habit name"
@@ -63,7 +67,6 @@ const Edit = observer((props: IEdit) => {
             />
 
             <InputField
-                className="margin-bottom"
                 inputId="countNumber"
                 label="How many times per day"
                 inputType="number"
@@ -81,23 +84,25 @@ const Edit = observer((props: IEdit) => {
                 }}
             />
 
-            <div className="flex-row">
-                <button
-                    type="button"
-                    className="button-accented"
+            <Box flex>
+                <Button
+                    caption={habitId ? 'Save' : 'Add'}
+                    padding="0 12px"
+                    color="#fff"
+                    background="7fd7e7"
+                    borderRadius="5px"
                     onClick={handleEdit}
-                >
-                    {habitId ? 'Save' : 'Add'}
-                </button>
+                />
 
-                <SaveButton
-                    type="button"
-                    className="button-unaccented margin-left"
+                <Button
+                    caption="Cancel"
+                    padding="0 12px"
+                    margin="0 0 0 12px"
+                    border="1px solid #7fd7e7"
+                    borderRadius="5px"
                     onClick={() => router.push('/')}
-                >
-                    Cancel
-                </SaveButton>
-            </div>
+                />
+            </Box>
         </Container>
     );
 });

@@ -6,7 +6,6 @@ export interface IInputField {
     placeholder: string;
     value: string|number;
     label: string;
-    className: string;
     onChange: Function;
 }
 

@@ -5,9 +5,8 @@ import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import {getHabits, saveHabits, IHabit} from './storage';
 import {getFormattedDate} from './helpers';
-import {Header} from './elements/Header';
 import {Wrapper} from './elements/Wrapper';
-import './index.less';
+import {Header} from './elements/Header';
 
 const Habits = lazy(() => import('./routes/Habits'));
 const Edit = lazy(() => import('./routes/Edit'));
@@ -16,6 +15,9 @@ const habitsLazyLoading = getHabits();
 
 const ContentWrapper = styled.div`
     background: ${(props) => props.theme.background};
+    padding: 12px;
+    height: calc(100% - 74px);
+    transition: 0.5s ease-out;
 `;
 
 const App = observer(() => {
@@ -39,7 +41,7 @@ const App = observer(() => {
     return (
         <>
             <Header />
-            <ContentWrapper className="wrapper">
+            <ContentWrapper>
                 <Suspense fallback={<div>Loading…</div>}>
                     <Switch>
                         <Route

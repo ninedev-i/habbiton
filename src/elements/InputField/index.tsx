@@ -1,12 +1,11 @@
 import React from 'react';
 import {observer} from 'mobx-react-lite';
+import {Box} from '../Box';
 import {LabelStyled, InputStyled, InputNumberContainer, NumberContainer} from './styled';
 import {IInputField, ILabel, IInput, IButtonWrapper} from './interface';
 
 export const InputField = observer((props: IInputField) => {
-    const {inputId, inputType, label, className, onChange} = props;
-
-    const containerClass = `flex-column ${className}`;
+    const {inputId, inputType, label, onChange} = props;
 
     const changeHandler = (value: number) => {
         let output;
@@ -24,7 +23,7 @@ export const InputField = observer((props: IInputField) => {
     };
 
     return (
-        <div className={containerClass}>
+        <Box flex column margin="0 0 12px 0">
             <Label
                 forId={inputId}
                 caption={label}
@@ -50,7 +49,7 @@ export const InputField = observer((props: IInputField) => {
                         {...props}
                     />
                 )}
-        </div>
+        </Box>
     );
 });
 

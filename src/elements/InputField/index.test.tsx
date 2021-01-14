@@ -9,7 +9,6 @@ const NumberInput = ({val = 1}) => {
 
     return (
         <InputField
-            className="testClass"
             inputId="testId"
             label="Test label"
             inputType="number"

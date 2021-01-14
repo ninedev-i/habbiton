@@ -2,6 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react-lite';
 import {isShowHabit} from '../../helpers';
 import {Title, Bar, Percents} from './styled';
+import {Box} from '../Box';
 import {IProgress, IHabit} from '../../storage';
 
 export const DayProgress = observer((props: {progress: IProgress; items: IHabit[]; currentDate: string;}) => {
@@ -15,11 +16,11 @@ export const DayProgress = observer((props: {progress: IProgress; items: IHabit[
     const width = Math.round((current * 100) / total);
 
     return (
-        <div className="flex-column">
+        <Box flex column>
             <Title>Day progress</Title>
             <Bar role="progressbar">
                 <Percents progressWidth={width} data-testid="progress" />
             </Bar>
-        </div>
+        </Box>
     );
 });

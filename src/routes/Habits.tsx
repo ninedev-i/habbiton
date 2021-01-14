@@ -5,6 +5,7 @@ import {DayProgress} from '../elements/DayProgress';
 import {DatePicker} from '../elements/DatePicker';
 import {getProgress, saveProgress, IHabit} from '../storage';
 import {getFormattedDate} from '../helpers';
+import {Box} from '../elements/Box';
 
 const Calendar = styled.div`
     width: 250px;
@@ -48,8 +49,8 @@ export default function Habits(props: IHabits) {
     };
 
     return (
-        <div className="flex-row">
-            <div className="flex-grow">
+        <Box flex>
+            <Box grow="1">
                 <DayProgress
                     items={habits}
                     progress={progress}
@@ -62,7 +63,7 @@ export default function Habits(props: IHabits) {
                     currentDate={currentDay}
                     increaseProgress={increaseProgress}
                 />
-            </div>
+            </Box>
             <Calendar>
                 <DatePicker
                     mode="single"
@@ -71,6 +72,6 @@ export default function Habits(props: IHabits) {
                     setSelected={(selection: Date) => setCurrentDay(getFormattedDate(selection))}
                 />
             </Calendar>
-        </div>
+        </Box>
     );
 }

@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import {ThemeContext} from '../../themes';
 import {Container, Logo, HeaderButton} from './styled';
+import {Box} from '../Box';
 
 export const Header = observer(() => {
     const {theme, toggleTheme} = useContext(ThemeContext);
@@ -11,7 +12,7 @@ export const Header = observer(() => {
     return (
         <Container>
             <Logo onClick={() => router.push('/')}>Habbiton</Logo>
-            <div className="flex-row">
+            <Box flex>
                 <HeaderButton
                     role="presentation"
                     onClick={() => router.push('/add')}
@@ -25,7 +26,7 @@ export const Header = observer(() => {
                 >
                     {theme === 'light' ? 'Dark theme' : 'Light theme'}
                 </HeaderButton>
-            </div>
+            </Box>
         </Container>
     );
 });

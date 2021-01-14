@@ -1,6 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react-lite';
 import {CheckboxLabel, CheckboxInput, Caption} from './styled';
+import {Box} from '../Box';
 
 interface IWeekdaySelector {
     selection: boolean[];
@@ -9,10 +10,10 @@ interface IWeekdaySelector {
 
 export const WeekdaySelector = observer((props: IWeekdaySelector) => {
     return (
-        <div className="flex-column margin-bottom">
+        <Box flex column margin="0 0 12px 0">
             <Caption>Active days</Caption>
             <DaysList {...props} />
-        </div>
+        </Box>
     );
 });
 
@@ -36,5 +37,5 @@ function DaysList(props: IWeekdaySelector) {
         );
     });
 
-    return <div className="flex-row">{list}</div>;
+    return <Box flex>{list}</Box>;
 }

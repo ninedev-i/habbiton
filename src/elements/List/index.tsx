@@ -3,14 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import {isShowHabit} from '../../helpers';
 import {ListItem, Title, Progress, Done, Toolbar, Counter} from './styled';
-import {IHabit, IProgress} from '../../storage';
-
-interface IList {
-    items: IHabit[];
-    progress: IProgress;
-    currentDate: string;
-    increaseProgress: Function;
-}
+import {IList} from './interface';
 
 export const List = observer((props: IList) => {
     const {items, progress, currentDate, increaseProgress} = props;
@@ -41,9 +34,7 @@ export const List = observer((props: IList) => {
                 <Title>
                     {item.title}
                 </Title>
-                <Counter
-                    className="list-item__counter"
-                >
+                <Counter className="list-item__counter">
                     <span>{current}</span>
                     <span>/</span>
                     <span>{item.countNumber}</span>
