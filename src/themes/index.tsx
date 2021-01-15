@@ -1,6 +1,16 @@
 import React, {createContext, useState} from 'react';
 import {keyframes, ThemeProvider as Provider} from 'styled-components';
 
+export interface IThemeProps {
+    color?: string;
+    background?: string;
+    headerBg?: string;
+    contentBg?: string;
+    progressBg?: string;
+    inputBg?: string;
+    inputBorder?: string;
+}
+
 type ITheme = 'light'|'dark';
 export const getTheme = (): ITheme => localStorage.getItem('theme') as ITheme || 'light';
 
@@ -20,7 +30,7 @@ export const constants = {
     `,
 };
 
-const themes = {
+const themes: {light: IThemeProps, dark: IThemeProps} = {
     light: {
         color: '#232227',
         background: '#fafbfc',

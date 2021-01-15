@@ -1,6 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react-lite';
 import {Box} from '../Box';
+import {Button} from '../Button';
 import {LabelStyled, InputStyled, InputNumberContainer, NumberContainer} from './styled';
 import {IInputField, ILabel, IInput, IButtonWrapper} from './interface';
 
@@ -88,9 +89,23 @@ function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {
 
     return (
         <NumberContainer>
-            <button className="button-accented" type="button" onClick={() => changeValue()}>-</button>
+            <Button
+                caption="-"
+                padding="0 12px"
+                color="#fff"
+                background="7fd7e7"
+                borderRadius="5px"
+                onClick={() => changeValue()}
+            />
             <InputNumberContainer>{children}</InputNumberContainer>
-            <button className="button-accented" type="button" onClick={() => changeValue(true)}>+</button>
+            <Button
+                caption="+"
+                padding="0 12px"
+                color="#fff"
+                background="7fd7e7"
+                borderRadius="5px"
+                onClick={() => changeValue(true)}
+            />
         </NumberContainer>
     );
 }

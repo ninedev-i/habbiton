@@ -1,4 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
+import {constants} from '../../helpers';
 
 export const CalendarStyles = createGlobalStyle`
     .date-picker {
@@ -29,6 +30,11 @@ export const CalendarStyles = createGlobalStyle`
                     text-align: center;
                     margin: 0 auto 25px;
                 }
+              
+                &_title {
+                    transition: ${constants.transition};
+                    color: ${(props) => props.theme.color};
+                }
             }
         }
         
@@ -41,7 +47,8 @@ export const CalendarStyles = createGlobalStyle`
             position: relative;
             height: 35px;
             width: 35px;
-            
+            color: ${(props) => props.theme.color};
+
             &:focus {
                 outline: 0;
             }
@@ -95,146 +102,148 @@ export const CalendarStyles = createGlobalStyle`
         }
         
         &-week {
-        display: flex;
-        margin-bottom: 8px;
-        
-        &:last-of-type {
-        margin-bottom: 0;
-        }
-        
-        &-day {
-            height: 34px;
-            width: 34px;
-            vertical-align: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-basis: 15%;
-            background: #fff;
-            position: relative;
-            border-radius: 50%;
-            margin: 0;
-            padding: 0;
-            border: none;
-            outline: 0;
-            
-            &:first-of-type:hover,
-            &:last-of-type:hover {
-                border-radius: 50%;
-            }
-            
-            &:first-of-type {
-                border-radius: 50%;
-            }
+            margin-bottom: 8px;
             
             &:last-of-type {
-                border-radius: 50%;
+                margin-bottom: 0;
             }
-            
-            &.is-prev_month,
-            &.is-next_month {
-                color: rgba(172, 179, 187, 0.85);
-            }
-            
-            &.is-today {
-                font-weight: 700;
-            }
-            
-            &.is-selected {
-                background: #d7f9ff;
-                color: #404040;
+        
+            &-day {
+                height: 34px;
+                width: 34px;
+                vertical-align: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-basis: 15%;
+                background: ${(props) => props.theme.inputBg};
+                color: ${(props) => props.theme.color};
+                transition: ${constants.transition};
                 position: relative;
-                z-index: 1;
-                border-radius: 0;
+                border-radius: 50%;
+                margin: 0;
+                padding: 0;
+                border: none;
+                outline: 0;
+                
+                &:first-of-type:hover,
+                &:last-of-type:hover {
+                    border-radius: 50%;
+                }
                 
                 &:first-of-type {
-                    border-radius: 50% 0 0 50%;
+                    border-radius: 50%;
                 }
                 
                 &:last-of-type {
-                    border-radius: 0 50% 50% 0;
-                }
-                
-                &::before {
-                    background: #7fd7e7;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    z-index: -1;
                     border-radius: 50%;
-                    color: #fff;
                 }
                 
-                &:hover::before {
-                    content: '';
-                    box-shadow: inset 0 0 1px 0 #7fd7e7;
+                &.is-prev_month,
+                &.is-next_month {
+                    color: rgba(172, 179, 187, 0.85);
+                }
+                
+                &.is-today {
+                    font-weight: 700;
+                }
+                
+                &.is-selected {
                     background: #d7f9ff;
                     color: #404040;
-                }
-                
-                &.is-start_selection.date-picker-week-day.is-selected:hover::before,
-                &.is-end_selection.date-picker-week-day.is-selected:hover::before {
-                    background: #7fd7e7;
-                }
-                
-                &.is-start_selection,
-                &.is-end_selection {
-                    background: #d7f9ff;
-                    color: #fff;
+                    position: relative;
+                    z-index: 1;
+                    border-radius: 0;
                     
-                    &::before {
-                        content: '';
+                    &:first-of-type {
+                        border-radius: 50% 0 0 50%;
                     }
-                }
-                
-                &.is-start_selection {
-                    border-radius: 50% 0 0 50%;
                     
                     &:last-of-type {
-                        border-radius: 50%;
+                        border-radius: 0 50% 50% 0;
                     }
-                }
-                
-                &.is-end_selection {
-                    border-radius: 0 50% 50% 0;
+                    
+                    &::before {
+                        background: #7fd7e7;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        z-index: -1;
+                        border-radius: 50%;
+                        color: #fff;
+                    }
+                    
+                    &:hover::before {
+                        content: '';
+                        box-shadow: inset 0 0 1px 0 #7fd7e7;
+                        background: #d7f9ff;
+                        color: #404040;
+                    }
+                    
+                    &.is-start_selection.date-picker-week-day.is-selected:hover::before,
+                    &.is-end_selection.date-picker-week-day.is-selected:hover::before {
+                        background: #7fd7e7;
+                    }
                     
                     &.is-start_selection,
-                    &:first-of-type {
-                        border-radius: 50%;
+                    &.is-end_selection {
+                        background: #d7f9ff;
+                        color: #fff;
+                        
+                        &::before {
+                            content: '';
+                        }
+                    }
+                    
+                    &.is-start_selection {
+                        border-radius: 50% 0 0 50%;
+                        
+                        &:last-of-type {
+                            border-radius: 50%;
+                        }
+                    }
+                    
+                    &.is-end_selection {
+                        border-radius: 0 50% 50% 0;
+                        
+                        &.is-start_selection,
+                        &:first-of-type {
+                            border-radius: 50%;
+                        }
                     }
                 }
-            }
-            
-            &.is-selectable {
-                cursor: pointer;
-                position: relative;
                 
-                &:before {
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    right: 0;
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
+                &.is-selectable {
+                    cursor: pointer;
+                    position: relative;
+                    
+                    &:before {
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        right: 0;
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                    }
+                    
+                    &:hover:not(.is-selected) {
+                        z-index: 1;
+                        box-shadow: inset 0 0 1px 0 #7fd7e7;
+                    }
                 }
                 
-                &:hover:not(.is-selected) {
-                    z-index: 1;
-                    box-shadow: inset 0 0 1px 0 #7fd7e7;
+                &.is-not_selectable {
+                    color: #e4e7ea;
                 }
-            }
-            
-            &.is-not_selectable {
-                color: #e4e7ea;
-            }
             }
         }
         
