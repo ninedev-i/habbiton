@@ -20,11 +20,12 @@ const TextComponent = styled.div`
 interface IEdit {
     habits: IHabit[];
     updateHabits: Function;
+    deleteHabit: Function;
 }
 
 const Edit = observer((props: IEdit) => {
     const router = useHistory();
-    const {habits, updateHabits} = props;
+    const {habits, updateHabits, deleteHabit} = props;
     const habitId = useParams<{id: string}>().id;
     let initialItem;
     if (habitId) {
@@ -44,6 +45,11 @@ const Edit = observer((props: IEdit) => {
         const addedItem = {...newItem};
         updateHabits(addedItem, habitId)
             .then(() => router.push('/'));
+    };
+
+    const handleDelete = () => {
+        deleteHabit(habitId);
+        router.push('/');
     };
 
     return (
@@ -84,23 +90,34 @@ const Edit = observer((props: IEdit) => {
                 }}
             />
 
-            <Box flex>
-                <Button
-                    caption={habitId ? 'Save' : 'Add'}
-                    padding="0 12px"
-                    color="#fff"
-                    background="7fd7e7"
-                    borderRadius="5px"
-                    onClick={handleEdit}
-                />
+            <Box flex spaceBetween grow="1" width="100%">
+                <Box>
+                    <Button
+                        caption={habitId ? 'Save' : 'Add'}
+                        padding="0 12px"
+                        color="#fff"
+                        background="7fd7e7"
+                        borderRadius="5px"
+                        onClick={handleEdit}
+                    />
+
+                    <Button
+                        caption="Cancel"
+                        padding="0 12px"
+                        margin="0 0 0 12px"
+                        border="1px solid #7fd7e7"
+                        borderRadius="5px"
+                        onClick={() => router.push('/')}
+                    />
+                </Box>
 
                 <Button
-                    caption="Cancel"
+                    caption="Delete"
                     padding="0 12px"
                     margin="0 0 0 12px"
-                    border="1px solid #7fd7e7"
+                    border="1px solid #f58b79"
                     borderRadius="5px"
-                    onClick={() => router.push('/')}
+                    onClick={handleDelete}
                 />
             </Box>
         </Container>

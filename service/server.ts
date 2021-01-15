@@ -30,6 +30,13 @@ mongoose
                 .catch(({stack, message}: Error) => logger.error({stack}, message));
         });
 
+        app.delete('/habits/:id', (req, res) => {
+            return HabitModel
+                .deleteOne({_id: req.params.id})
+                .then((data) => res.send(data))
+                .catch(({stack, message}: Error) => logger.error({stack}, message));
+        });
+
         app.post('/habits', (req, res) => {
             return new HabitModel(req.body)
                 .save()

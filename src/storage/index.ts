@@ -25,6 +25,12 @@ export const saveHabits = (habit: IHabit): Promise<IHabit> => {
         .then((res) => res.data);
 };
 
+export const deleteHabit = (key: string): Promise<boolean> => {
+    return data
+        .delete(`/habits/${key}`)
+        .then((res) => res.data);
+};
+
 export type IProgress = Map<string, {[habitNumber: string]: number }>;
 
 export const getProgress = (date: string): Promise<IProgress> => {

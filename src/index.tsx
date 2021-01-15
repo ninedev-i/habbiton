@@ -3,7 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
-import {getHabits, saveHabits, IHabit} from './storage';
+import {getHabits, saveHabits, deleteHabit, IHabit} from './storage';
 import {getFormattedDate} from './helpers';
 import {Wrapper} from './elements/Wrapper';
 import {Header} from './elements/Header';
@@ -38,6 +38,12 @@ const App = observer(() => {
         });
     };
 
+    const handleDeleteHabit = (key: string) => {
+        const updatedHabits = habits.filter((item) => item._id !== key);
+        deleteHabit(key)
+            .then(() => setHabits(updatedHabits));
+    };
+
     return (
         <>
             <Header />
@@ -62,6 +68,7 @@ const App = observer(() => {
                                 <Edit
                                     habits={habits}
                                     updateHabits={(item: IHabit, habitId: string) => updateHabits(item, habitId)}
+                                    deleteHabit={() => {}}
                                 />
                             )}
                         />
@@ -72,6 +79,7 @@ const App = observer(() => {
                                 <Edit
                                     habits={habits}
                                     updateHabits={(item: IHabit, habitId: string) => updateHabits(item, habitId)}
+                                    deleteHabit={(habitId: string) => handleDeleteHabit(habitId)}
                                 />
                             )}
                         />

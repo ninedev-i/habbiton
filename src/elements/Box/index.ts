@@ -8,6 +8,8 @@ interface IBox {
     grow?: string;
     borderRadius?: string;
     boxShadow?: boolean;
+    spaceBetween?: boolean;
+    width?: string;
 }
 
 export const Box = styled.div<IBox>`
@@ -15,6 +17,8 @@ export const Box = styled.div<IBox>`
     display: ${({flex}) => (flex ? 'flex' : 'block')};
     flex-direction: ${({column}) => (column ? 'column' : 'row')};
     flex-grow: ${({grow = '0'}) => `${grow}`};
+    justify-content: ${({spaceBetween}) => `${spaceBetween ? 'space-between' : 'normal'}`};
+    width: ${({width = 'auto'}) => `${width}`};
     margin: ${({margin = '0'}) => `${margin}`};
     padding: ${({padding = '0'}) => `${padding}`};
     border-radius: ${({borderRadius = '0'}) => `${borderRadius}`};
