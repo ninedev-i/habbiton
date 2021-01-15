@@ -14,27 +14,28 @@ module.exports = (env, argv) => {
         },
         target: ['web', 'es2017'],
         resolve: {
-            extensions: ['.ts', '.tsx', '.js', '.less'],
+            extensions: ['.ts', '.tsx', '.js'],
         },
         module: {
             rules: [
                 {
                     test: /\.(js|jsx)$/,
-                    exclude: /node_modules/,
                     use: ['babel-loader'],
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.tsx?$/,
                     use: 'ts-loader',
-                    exclude: '/node_modules/',
+                    exclude: /node_modules/,
                 },
                 {
-                    test: /\.(css|less)$/,
+                    test: /\.png$/,
                     use: [
-                        'style-loader',
-                        {loader: 'css-loader', options: {sourceMap: true, importLoaders: 1}},
-                        {loader: 'less-loader', options: {sourceMap: true}},
+                        {loader: 'file-loader',
+                            options: {name: '[name].[ext]', outputPath: 'static/assets/', publicPath: 'static/assets/'},
+                        },
                     ],
+                    exclude: /node_modules/,
                 },
             ],
         },
@@ -62,9 +63,9 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Welcome to sivaraj-v github ',
                 template: './src/index.html',
                 filename: './index.html',
+                favicon: './src/favicon.png',
                 meta: {
                     viewport: 'width=device-width, initial-scale=1.0',
                     charset: 'UTF-8',

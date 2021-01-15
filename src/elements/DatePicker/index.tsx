@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from 'simple-react-calendar';
 // import Day from 'simple-react-calendar/lib/RenderPropsComponents/Day';
-import './index.less';
+import {CalendarStyles} from './styles';
 
 interface IDatePicker {
     mode: string;
@@ -14,15 +14,18 @@ export const DatePicker = (props: IDatePicker) => {
     const {mode, selected, setSelected, disableDaysOfWeek} = props;
 
     return (
-        <Calendar
-            blockClassName="date-picker"
-            disableDaysOfWeek={disableDaysOfWeek}
-            mode={mode || 'range'}
-            activeMonth={new Date()}
-            // renderDay={(properties: IDatePicker) => <DayAccented {...properties} />}
-            selected={selected}
-            onSelect={(selection: IDatePicker) => setSelected(selection)}
-        />
+        <>
+            <CalendarStyles />
+            <Calendar
+                blockClassName="date-picker"
+                disableDaysOfWeek={disableDaysOfWeek}
+                mode={mode || 'range'}
+                activeMonth={new Date()}
+                // renderDay={(properties: IDatePicker) => <DayAccented {...properties} />}
+                selected={selected}
+                onSelect={(selection: IDatePicker) => setSelected(selection)}
+            />
+        </>
     );
 };
 
