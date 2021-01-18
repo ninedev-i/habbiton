@@ -1,11 +1,10 @@
 import React from 'react';
-import {observer} from 'mobx-react-lite';
 import {Box} from '../Box';
 import {Button} from '../Button';
 import {LabelStyled, InputStyled, InputNumberContainer, NumberContainer} from './styled';
 import {IInputField, ILabel, IInput, IButtonWrapper} from './interface';
 
-export const InputField = observer((props: IInputField) => {
+export const InputField = (props: IInputField) => {
     const {inputId, inputType, label, onChange} = props;
 
     const changeHandler = (value: number) => {
@@ -52,7 +51,7 @@ export const InputField = observer((props: IInputField) => {
                 )}
         </Box>
     );
-});
+};
 
 function Label({caption, forId}: ILabel) {
     if (!caption) {

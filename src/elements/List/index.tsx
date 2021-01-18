@@ -1,32 +1,29 @@
-import React, {SyntheticEvent} from 'react';
+import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
+import {StoreContext} from '../../storage';
 import {isShowHabit} from '../../helpers';
 import {ListItem, Title, Progress, Done, Toolbar, Counter} from './styled';
 import {IList} from './interface';
 
 export const List = observer((props: IList) => {
-    const {items, progress, currentDate, increaseProgress} = props;
+    const {items, currentDate} = props;
+    const {progressStore} = useContext(StoreContext);
     const router = useHistory();
-
-    const editItem = (ev: SyntheticEvent, key: string) => {
-        ev.stopPropagation();
-        router.push(`edit/${key}`);
-    };
 
     const list = items.map((item) => {
         if (!isShowHabit(item, currentDate)) {
             return;
         }
 
-        const current = progress.get(item._id)?.progress || 0;
+        const current = progressStore.progress.get(item._id)?.progress || 0;
         const width = Math.round((current * 100) / item.countNumber);
 
         return (
             <ListItem
                 key={item._id}
                 role="presentation"
-                onClick={() => increaseProgress(item._id)}
+                onClick={() => progressStore.increaseProgress(item, currentDate)}
             >
                 <Progress
                     width={width}
@@ -43,7 +40,10 @@ export const List = observer((props: IList) => {
                 <Toolbar
                     className="list-item__toolbar"
                     role="presentation"
-                    onClick={(ev) => editItem(ev, item._id)}
+                    onClick={(ev) => {
+                        ev.stopPropagation();
+                        router.push(`edit/${item._id}`);
+                    }}
                 >
                     Edit
                 </Toolbar>

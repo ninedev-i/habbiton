@@ -1,5 +1,4 @@
 import React from 'react';
-import {observer} from 'mobx-react-lite';
 import {CheckboxLabel, CheckboxInput, Caption} from './styled';
 import {Box} from '../Box';
 
@@ -8,14 +7,14 @@ interface IWeekdaySelector {
     onSelect: Function;
 }
 
-export const WeekdaySelector = observer((props: IWeekdaySelector) => {
+export const WeekdaySelector = (props: IWeekdaySelector) => {
     return (
         <Box flex column margin="0 0 12px 0">
             <Caption>Active days</Caption>
             <DaysList {...props} />
         </Box>
     );
-});
+};
 
 function DaysList(props: IWeekdaySelector) {
     const {selection, onSelect} = props;

@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
 import {observer} from 'mobx-react-lite';
 import {useHistory, useParams} from 'react-router-dom';
+import {StoreContext} from '../storage';
 import {InputField} from '../elements/InputField';
 import {WeekdaySelector} from '../elements/WeekdaySelector';
 import {getFormattedDate} from '../helpers';
 import {Button} from '../elements/Button';
 import {Box} from '../elements/Box';
-import {IHabit} from '../storage';
+import {IHabit} from '../storage/habits';
 
 const Container = styled(Box)`
     background: ${(props) => props.theme.contentBg};
@@ -17,19 +18,13 @@ const TextComponent = styled.div`
     color: ${(props) => props.theme.color};
 `;
 
-interface IEdit {
-    habits: IHabit[];
-    updateHabits: Function;
-    deleteHabit: Function;
-}
-
-const Edit = observer((props: IEdit) => {
+const Edit = observer(() => {
+    const {habitStore} = useContext(StoreContext);
     const router = useHistory();
-    const {habits, updateHabits, deleteHabit} = props;
     const habitId = useParams<{id: string}>().id;
     let initialItem;
     if (habitId) {
-        initialItem = habits.find((item) => item._id === habitId);
+        initialItem = habitStore.habits.find((item: IHabit) => item._id === habitId);
     } else {
         initialItem = {
             title: '',
@@ -40,17 +35,6 @@ const Edit = observer((props: IEdit) => {
     }
 
     const [newItem, setNewItem] = useState(initialItem);
-
-    const handleEdit = () => {
-        const addedItem = {...newItem};
-        updateHabits(addedItem, habitId)
-            .then(() => router.push('/'));
-    };
-
-    const handleDelete = () => {
-        deleteHabit(habitId);
-        router.push('/');
-    };
 
     return (
         <Container
@@ -98,7 +82,11 @@ const Edit = observer((props: IEdit) => {
                         color="#fff"
                         background="7fd7e7"
                         borderRadius="5px"
-                        onClick={handleEdit}
+                        onClick={() => {
+                            habitStore
+                                .saveHabit(newItem)
+                                .then(() => router.push('/'));
+                        }}
                     />
 
                     <Button
@@ -117,7 +105,11 @@ const Edit = observer((props: IEdit) => {
                     margin="0 0 0 12px"
                     border="1px solid #f58b79"
                     borderRadius="5px"
-                    onClick={handleDelete}
+                    onClick={() => {
+                        habitStore
+                            .deleteHabit(habitId)
+                            .then(() => router.push('/'));
+                    }}
                 />
             </Box>
         </Container>

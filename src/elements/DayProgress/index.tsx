@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {observer} from 'mobx-react-lite';
+import {StoreContext} from '../../storage';
 import {isShowHabit} from '../../helpers';
 import {Title, Bar, Percents} from './styled';
 import {Box} from '../Box';
-import {IProgress, IHabit} from '../../storage';
+import {IHabit} from '../../storage/habits';
+import {IProgressData} from '../../../service/models/Progress';
 
-export const DayProgress = observer((props: {progress: IProgress; items: IHabit[]; currentDate: string;}) => {
-    const {progress, items, currentDate} = props;
+export const DayProgress = observer((props: {items: IHabit[]; currentDate: string;}) => {
+    const { items, currentDate} = props;
+    const {progressStore} = useContext(StoreContext);
 
     let current = 0;
-    progress.forEach((item) => {
+    progressStore.progress.forEach((item: IProgressData) => {
         current += item.progress;
     });
     const total = items.reduce((a, b) => a + (b && isShowHabit(b, currentDate) ? +b.countNumber : 0), 0);

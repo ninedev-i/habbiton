@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
-import {observer} from 'mobx-react-lite';
 import {ThemeContext} from '../../themes';
 import {Container, Logo, HeaderButton} from './styled';
 import {Box} from '../Box';
 
-export const Header = observer(() => {
+export const Header = () => {
     const {theme, toggleTheme} = useContext(ThemeContext);
     const router = useHistory();
 
@@ -29,4 +28,4 @@ export const Header = observer(() => {
             </Box>
         </Container>
     );
-});
+};

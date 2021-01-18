@@ -1,5 +1,5 @@
 import {keyframes} from 'styled-components';
-import {IHabit} from './storage';
+import {IHabit} from './storage/habits';
 
 export const getFormattedDate = (date: Date = new Date()): string => {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

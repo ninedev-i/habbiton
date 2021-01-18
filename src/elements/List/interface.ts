@@ -1,8 +1,6 @@
-import {IHabit, IProgress} from '../../storage';
+import {IHabit} from '../../storage/habits';
 
 export interface IList {
     items: IHabit[];
-    progress: IProgress;
     currentDate: string;
-    increaseProgress: Function;
 }

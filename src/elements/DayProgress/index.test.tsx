@@ -1,33 +1,51 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import {getFormattedDate} from '../../helpers';
+import {Wrapper} from '../Wrapper';
+import {StoreContext} from '../../storage';
 import {DayProgress} from './index';
-import {IHabit, IProgress} from '../../storage';
+import {IProgress} from '../../storage/progress';
+import {IHabit} from '../../storage/habits';
 
-const renderDayProgress = (habits: IHabit[], progress: IProgress, currentDate: string) => {
-    return render(
+const date = getFormattedDate(new Date());
+const habitId = '0';
+
+interface IRender {
+    items: IHabit[];
+    currentDate: string;
+    countNumber: number;
+}
+
+const RenderedProgress = ({items, currentDate, countNumber}: IRender) => {
+    const {progressStore} = useContext(StoreContext);
+    const progress = new Map();
+    progress.set(habitId, {date: currentDate, habitId, progress: countNumber});
+    progressStore.setProgress(progress);
+
+    return (
         <DayProgress
-            items={habits}
-            progress={progress}
+            items={items}
             currentDate={currentDate}
-        />,
+        />
     );
 };
 
-const getData = (countNumber: number) => {
-    const currentDate = getFormattedDate(new Date());
-    const habitId = '0';
-    const progress = new Map();
-    progress.set(habitId, {date: currentDate, habitId, progress: countNumber});
+const renderDayProgress = (habits: IHabit[], currentDate: string, countNumber: number) => {
+    return render(
+        <Wrapper>
+            <RenderedProgress items={habits} currentDate={currentDate} countNumber={countNumber} />
+        </Wrapper>,
+    );
+};
 
+const getData = () => {
     return {
-        currentDate,
-        progress,
+        currentDate: date,
         habits: [{
             _id: habitId,
             title: 'Testing habit',
-            dateRange: [currentDate, null],
+            dateRange: [date, null],
             weekDays: [true, true, true, true, true, true, true],
             countNumber: 100,
         }],
@@ -47,10 +65,10 @@ const getCurrentProgressWidth = () => parseInt(getComputedStyle(screen.getByTest
 
 describe('<DayProgress /> tests', () => {
     const countNumber = 60;
-    const {habits, currentDate, progress} = getData(countNumber);
+    const {habits, currentDate} = getData();
 
     test('Check initial progress', () => {
-        renderDayProgress(habits, progress, currentDate);
+        renderDayProgress(habits, currentDate, countNumber);
         const habitProgressWidth = getPercentWidth(countNumber, habits[0].countNumber);
 
         expect(getCurrentProgressWidth()).toBe(habitProgressWidth);
