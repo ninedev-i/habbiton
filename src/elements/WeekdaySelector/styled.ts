@@ -6,7 +6,7 @@ export const CheckboxLabel = styled.label`
     display: block;
     padding: 6px 12px;
     margin-right: 12px;
-    background: #fafbfc;
+    background: #f0f2f5;
     color: #9e9e9e;
 `;
 

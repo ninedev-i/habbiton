@@ -8,7 +8,7 @@ import {getFormattedDate} from '../helpers';
 import {Box} from '../elements/Box';
 
 const Calendar = styled.div`
-    width: 250px;
+    width: 270px;
     padding: 0 12px;
 `;
 
@@ -22,7 +22,7 @@ const Habits = (props: {currentDay: string, setCurrentDay: Function}) => {
 
     return (
         <Box flex>
-            <Box grow="1">
+            <Box grow="1" margin="8px 12px 0 0">
                 <DayProgress
                     items={habitStore.habits}
                     currentDate={currentDay}

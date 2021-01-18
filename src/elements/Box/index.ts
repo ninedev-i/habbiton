@@ -10,15 +10,16 @@ interface IBox {
     boxShadow?: boolean;
     spaceBetween?: boolean;
     width?: string;
+    flexBasis?: string;
 }
 
 export const Box = styled.div<IBox>`
-    align-items: baseline;
     display: ${({flex}) => (flex ? 'flex' : 'block')};
     flex-direction: ${({column}) => (column ? 'column' : 'row')};
     flex-grow: ${({grow = '0'}) => `${grow}`};
     justify-content: ${({spaceBetween}) => `${spaceBetween ? 'space-between' : 'normal'}`};
     width: ${({width = 'auto'}) => `${width}`};
+    flex-basis: ${({flexBasis = 'auto'}) => `${flexBasis}`};
     margin: ${({margin = '0'}) => `${margin}`};
     padding: ${({padding = '0'}) => `${padding}`};
     border-radius: ${({borderRadius = '0'}) => `${borderRadius}`};

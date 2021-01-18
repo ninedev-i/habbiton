@@ -38,6 +38,5 @@ export const GlobalStyle = createGlobalStyle`
 
     #root {
         height: 100vh;
-        background: #fafbfc;
     };
 `;

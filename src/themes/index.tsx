@@ -33,7 +33,7 @@ export const constants = {
 const themes: {light: IThemeProps, dark: IThemeProps} = {
     light: {
         color: '#232227',
-        background: '#fafbfc',
+        background: '#f0f2f5',
         headerBg: '#7fd7e7',
         contentBg: '#fff',
         progressBg: '#d7f9ff',

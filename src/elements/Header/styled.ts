@@ -6,7 +6,7 @@ export const Container = styled.header`
     transition: ${constants.transition};
     padding: 12px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: baseline;
 `;
 

@@ -6,7 +6,7 @@ export const CalendarStyles = createGlobalStyle`
         border-radius: 5px;
         display: flex;
         flex-direction: column;
-        max-width: 250px;
+        max-width: 262px;
         
         &-notice {
             font-size: 11px;
@@ -112,6 +112,7 @@ export const CalendarStyles = createGlobalStyle`
             &-day {
                 height: 34px;
                 width: 34px;
+                max-width: 34px;
                 vertical-align: middle;
                 -webkit-user-select: none;
                 -moz-user-select: none;
@@ -126,7 +127,8 @@ export const CalendarStyles = createGlobalStyle`
                 transition: ${constants.transition};
                 position: relative;
                 border-radius: 50%;
-                margin: 0;
+                box-shadow: 0 0 15px -4px rgba(34,60,80,0.1);
+                margin: 0 2px;
                 padding: 0;
                 border: none;
                 outline: 0;
@@ -138,10 +140,12 @@ export const CalendarStyles = createGlobalStyle`
                 
                 &:first-of-type {
                     border-radius: 50%;
+                    margin-left: 0;
                 }
                 
                 &:last-of-type {
                     border-radius: 50%;
+                    margin-right: 0;
                 }
                 
                 &.is-prev_month,
@@ -169,7 +173,7 @@ export const CalendarStyles = createGlobalStyle`
                     }
                     
                     &::before {
-                        background: #7fd7e7;
+                        background: ${(props) => props.theme.progressBg};
                         top: 0;
                         left: 0;
                         width: 100%;
@@ -177,7 +181,7 @@ export const CalendarStyles = createGlobalStyle`
                         position: absolute;
                         z-index: -1;
                         border-radius: 50%;
-                        color: #fff;
+                        color: #404040;
                     }
                     
                     &:hover::before {
@@ -187,15 +191,15 @@ export const CalendarStyles = createGlobalStyle`
                         color: #404040;
                     }
                     
-                    &.is-start_selection.date-picker-week-day.is-selected:hover::before,
-                    &.is-end_selection.date-picker-week-day.is-selected:hover::before {
-                        background: #7fd7e7;
-                    }
+                    //&.is-start_selection.date-picker-week-day.is-selected:hover::before,
+                    //&.is-end_selection.date-picker-week-day.is-selected:hover::before {
+                    //    background: #7fd7e7;
+                    //}
                     
                     &.is-start_selection,
                     &.is-end_selection {
-                        background: #d7f9ff;
-                        color: #fff;
+                        background: ${(props) => props.theme.progressBg};
+                        color: ${(props) => props.theme.color};
                         
                         &::before {
                             content: '';
