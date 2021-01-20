@@ -15,6 +15,9 @@ const habitSchema: Schema = new Schema({
     weekDays: [{
         type: Boolean,
     }],
+    notifications: [{
+        type: String,
+    }],
 });
 
 export interface IHabit extends Document {
@@ -22,6 +25,7 @@ export interface IHabit extends Document {
     dateRange: string[];
     weekDays: boolean[];
     countNumber: number;
+    notifications: string[];
 }
 
 export default model<IHabit>('Habit', habitSchema);

@@ -1,4 +1,4 @@
-import {makeAutoObservable} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import {AxiosInstance} from 'axios';
 
 export interface IHabit {
@@ -20,22 +20,26 @@ export class Habits {
         this.getHabits();
     }
 
-    getHabits(): Promise<void> {
-        return this.service
+    async getHabits(): Promise<void> {
+        const habits = await this.service
             .get<IHabit[]>('/habits')
-            .then(({data}) => {
-                this.habits = data;
-            });
+            .then(({data}) => data);
+
+        runInAction(() => {
+            this.habits = habits;
+        });
     }
 
-    saveHabit(habit: IHabit): Promise<void> {
-        return this.service
+    async saveHabit(habit: IHabit): Promise<void> {
+        const habits = await this.service
             .post(`/habits/${habit._id || ''}`, habit)
-            .then((res) => {
-                this.habits = habit._id
-                    ? this.habits.slice(0).map((item) => (item._id === habit._id ? res.data : item))
-                    : [...this.habits, res.data];
-            });
+            .then(({data}) => data);
+
+        runInAction(() => {
+            this.habits = habit._id
+                ? this.habits.slice(0).map((item) => (item._id === habit._id ? habits : item))
+                : [...this.habits, habits];
+        });
     }
 
     deleteHabit(key: string): Promise<void> {

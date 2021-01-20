@@ -1,11 +1,14 @@
-import React, {Suspense, lazy, useState} from 'react';
+import React, {Suspense, lazy, useState, useContext, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
-import {getFormattedDate} from './helpers';
+import {StoreContext} from './storage';
+import {getFormattedDate, showNotification} from './helpers';
 import {Wrapper} from './elements/Wrapper';
 import {Header} from './elements/Header';
 import {Box} from './elements/Box';
+import {IHabit} from '../service/models/Habits';
 
 const Habits = lazy(() => import('./routes/Habits'));
 const Edit = lazy(() => import('./routes/Edit'));
@@ -19,8 +22,22 @@ const ContentWrapper = styled.div`
     transition: 0.5s ease-out;
 `;
 
-const App = () => {
+const App = observer(() => {
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
+    const {time, habitStore} = useContext(StoreContext);
+    const [times, setTimes] = useState([]);
+
+    useEffect(() => {
+        setTimes(habitStore.habits.map((item: IHabit) => item.notifications).flat());
+    }, [habitStore.habits]);
+
+    useEffect(() => {
+        if (times.includes(time)) {
+            habitStore.habits
+                .filter((item: IHabit) => item.notifications.includes(time))
+                .forEach((item: IHabit) => showNotification(item.title));
+        }
+    }, [time, times]);
 
     return (
         <>
@@ -55,7 +72,7 @@ const App = () => {
             </ContentWrapper>
         </>
     );
-};
+});
 
 ReactDOM.render(
     <Wrapper>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const InputStyled = styled.input`
-    width: calc(100% - 14px);
+    width: ${({width = 'calc(100% - 14px)'}) => width};
     background: ${(props) => props.theme.inputBg};
     color: ${(props) => props.theme.color};
     border: ${(props) => props.theme.inputBorder};

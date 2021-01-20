@@ -26,3 +26,15 @@ export const constants = {
         }
     `,
 };
+
+export const showNotification = (text: string) => {
+    if (Notification.permission === 'granted') {
+        new Notification(text);
+    } else if (Notification.permission !== 'denied') {
+        return Notification.requestPermission((permission) => {
+            if (permission === 'granted') {
+                new Notification(text);
+            }
+        });
+    }
+};

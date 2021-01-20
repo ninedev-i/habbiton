@@ -2,17 +2,20 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
+import {Wrapper} from '../Wrapper';
 import {DatePicker} from './index';
 import {getFormattedDate} from '../../helpers';
 
 const renderPicker = (setDate: Function) => {
     return render(
-        <DatePicker
-            mode="single"
-            disableDaysOfWeek
-            selected={new Date()}
-            setSelected={(selection: Date) => setDate(getFormattedDate(selection))}
-        />,
+        <Wrapper>
+            <DatePicker
+                mode="single"
+                disableDaysOfWeek
+                selected={new Date()}
+                setSelected={(selection: Date) => setDate(getFormattedDate(selection))}
+            />
+        </Wrapper>,
     );
 };
 

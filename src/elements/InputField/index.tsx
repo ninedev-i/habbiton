@@ -24,10 +24,7 @@ export const InputField = (props: IInputField) => {
 
     return (
         <Box flex column margin="0 0 12px 0">
-            <Label
-                forId={inputId}
-                caption={label}
-            />
+            {label && <Label forId={inputId} caption={label} /> }
             {inputType === 'number'
                 ? (
                     <ButtonWrapper changeHandler={changeHandler} {...props}>
@@ -67,12 +64,13 @@ function Label({caption, forId}: ILabel) {
     );
 }
 
-function Input({inputId, inputType, placeholder, value, changeHandler, checkValue}: IInput) {
+function Input({inputId, inputType, placeholder, value, changeHandler, checkValue, inputWidth}: IInput) {
     return (
         <InputStyled
             id={inputId}
             type={inputType}
             placeholder={placeholder}
+            width={inputWidth}
             value={value}
             min={1}
             onChange={(ev) => changeHandler(ev.target.value)}
@@ -86,13 +84,14 @@ function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {
         changeHandler(isIncrease ? +value + 1 : +value - 1);
     };
 
+    const background = '7fd7e7';
     return (
         <NumberContainer>
             <Button
                 caption="-"
                 padding="0 12px"
                 color="#fff"
-                background="7fd7e7"
+                background={background}
                 borderRadius="5px"
                 onClick={() => changeValue()}
             />
@@ -101,7 +100,7 @@ function ButtonWrapper({value, changeHandler, children}: IButtonWrapper) {
                 caption="+"
                 padding="0 12px"
                 color="#fff"
-                background="7fd7e7"
+                background={background}
                 borderRadius="5px"
                 onClick={() => changeValue(true)}
             />

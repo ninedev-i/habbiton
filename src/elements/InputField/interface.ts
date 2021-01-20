@@ -1,10 +1,11 @@
 import {ReactNode} from 'react';
 
 export interface IInputField {
-    inputId: string;
+    inputId?: string;
     inputType: string;
     placeholder: string;
     value: string|number;
+    inputWidth?: string;
     label: string;
     onChange: Function;
 }

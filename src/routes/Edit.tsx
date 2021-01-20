@@ -7,6 +7,7 @@ import {InputField} from '../elements/InputField';
 import {WeekdaySelector} from '../elements/WeekdaySelector';
 import {getFormattedDate} from '../helpers';
 import {Button} from '../elements/Button';
+import {Timers} from '../elements/Timers';
 import {Box} from '../elements/Box';
 import {IHabit} from '../storage/habits';
 
@@ -31,11 +32,13 @@ const Edit = observer(() => {
             dateRange: [getFormattedDate(), null],
             countNumber: 1,
             weekDays: [true, true, true, true, true, false, false],
+            notifications: [],
         };
     }
 
     const [newItem, setNewItem] = useState(initialItem);
 
+    const background = '7fd7e7';
     return (
         <Container
             flex
@@ -52,6 +55,7 @@ const Edit = observer(() => {
                 label="Caption"
                 placeholder="Habit name"
                 inputType="text"
+                inputWidth="auto"
                 value={newItem.title}
                 onChange={(title: string) => setNewItem({...newItem, ...{title}})}
             />
@@ -60,6 +64,7 @@ const Edit = observer(() => {
                 inputId="countNumber"
                 label="How many times per day"
                 inputType="number"
+                inputWidth="15px"
                 placeholder=""
                 value={newItem.countNumber}
                 onChange={(countNumber: number) => setNewItem({...newItem, ...{countNumber}})}
@@ -74,13 +79,20 @@ const Edit = observer(() => {
                 }}
             />
 
+            <Timers
+                selection={newItem.notifications}
+                onSelect={(notifications: string[]) => {
+                    setNewItem({...newItem, ...{notifications}});
+                }}
+            />
+
             <Box flex spaceBetween grow="1" width="100%">
                 <Box>
                     <Button
                         caption={habitId ? 'Save' : 'Add'}
                         padding="0 12px"
                         color="#fff"
-                        background="7fd7e7"
+                        background={background}
                         borderRadius="5px"
                         onClick={() => {
                             habitStore
