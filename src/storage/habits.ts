@@ -17,7 +17,6 @@ export class Habits {
     constructor(service: AxiosInstance) {
         makeAutoObservable(this);
         this.service = service;
-        this.getHabits();
     }
 
     async getHabits(): Promise<void> {

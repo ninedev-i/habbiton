@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface IBox {
+export interface IBox {
     flex?: boolean;
     column?: boolean;
     margin?: string;

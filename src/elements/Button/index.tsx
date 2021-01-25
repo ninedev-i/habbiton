@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 
-interface IButton {
-    caption: string;
+export interface IButton {
+    caption?: string;
     flex?: boolean;
     column?: boolean;
     margin?: string;

@@ -26,6 +26,7 @@ const App = observer(() => {
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
     const {time, habitStore} = useContext(StoreContext);
     const [times, setTimes] = useState([]);
+    habitStore.getHabits();
 
     useEffect(() => {
         setTimes(habitStore.habits.map((item: IHabit) => item.notifications).flat());

@@ -5,7 +5,6 @@ import {getFormattedDate} from '../../helpers';
 import {Wrapper} from '../Wrapper';
 import {StoreContext} from '../../storage';
 import {DayProgress} from './index';
-import {IProgress} from '../../storage/progress';
 import {IHabit} from '../../storage/habits';
 
 const date = getFormattedDate(new Date());
