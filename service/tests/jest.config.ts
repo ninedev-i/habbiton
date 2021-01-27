@@ -2,11 +2,7 @@ import type {Config} from '@jest/types';
 
 const config: Config.InitialOptions = {
     verbose: true,
-    roots: ['src'],
-    moduleFileExtensions: ['js', 'tsx', 'ts'],
-    moduleNameMapper: {
-        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|)$': '<rootDir>/__mocks__/fileMock.ts',
-    },
+    moduleFileExtensions: ['js', 'ts'],
     resetMocks: true,
     clearMocks: true,
     globals: {
@@ -14,12 +10,14 @@ const config: Config.InitialOptions = {
             tsconfig: 'tsconfig.json',
         },
     },
+    globalSetup: '<rootDir>/setup.ts',
+    globalTeardown: '<rootDir>/teardown.ts',
     transform: {
-        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.ts?$': 'ts-jest',
     },
     testMatch: [
-        '**/src/**/*.test.(ts|js|tsx)',
+        '**/*.test.ts',
     ],
-    testEnvironment: 'jsdom',
+    testEnvironment: 'node',
 };
 export default config;

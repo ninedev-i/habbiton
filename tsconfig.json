@@ -17,6 +17,6 @@
     ],
     "types": ["jest", "@types/jest", "@testing-library/jest-dom"]
   },
-  "exclude": ["**/*.test.tsx", "__tests__", "__mocks__"],
+  "exclude": ["**/*.test.tsx", "**/*.test.ts", "__tests__", "__mocks__"],
   "include": ["src"]
 }
