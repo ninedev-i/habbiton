@@ -1,15 +1,13 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-// @ts-ignore
-import {find} from 'styled-components/test-utils';
 import {Wrapper} from '../Wrapper';
 import {Box, IBox} from './index';
 
 const renderBox = (props?: IBox) => {
     return render(
         <Wrapper>
-            <Box {...props}>Test text</Box>
+            <Box data-testid="box" {...props}>Test text</Box>
         </Wrapper>,
     );
 };
@@ -17,13 +15,13 @@ const renderBox = (props?: IBox) => {
 describe('<Box /> tests', () => {
     test('Check content', () => {
         renderBox();
-        const box = find(document.querySelector('body'), Box);
+        const box = screen.getByTestId('box');
         expect(box).toHaveTextContent('Test text');
     });
 
     test('Check default props', () => {
         renderBox();
-        const box = find(document.querySelector('body'), Box);
+        const box = screen.getByTestId('box');
         expect(box).toHaveStyle(`
             display: block;
             flex-direction: row;
@@ -53,7 +51,7 @@ describe('<Box /> tests', () => {
         };
 
         renderBox(properties);
-        const box = find(document.querySelector('body'), Box);
+        const box = screen.getByTestId('box');
         expect(box).toHaveStyle(`
             display: flex;
             flex-direction: column;

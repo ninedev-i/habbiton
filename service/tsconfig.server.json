@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "../dist/service",
-    "noEmit": false
+    "noEmit": false,
+    "strict": true
   },
   "include": [
     "server"

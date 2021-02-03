@@ -46,7 +46,7 @@ export const Timers = (props: {selection: string[], onSelect: Function}) => {
                 inputWidth="68px"
                 placeholder=""
                 value={fieldValue}
-                label={null}
+                label=""
                 onChange={(val: string) => {
                     setFieldValue(val);
                     if (fieldValue.length === 5) {

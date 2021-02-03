@@ -6,11 +6,12 @@ export interface IInputField {
     placeholder: string;
     value: string|number;
     inputWidth?: string;
-    label: string;
+    label: string|null;
     onChange: Function;
 }
 
-export interface ILabel {caption: string;
+export interface ILabel {
+    caption?: string;
     forId: string;
 }
 

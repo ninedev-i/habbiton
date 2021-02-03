@@ -24,7 +24,12 @@ export const InputField = (props: IInputField) => {
 
     return (
         <Box flex column margin="0 0 12px 0">
-            {label && <Label forId={inputId} caption={label} /> }
+            {label && inputId && (
+                <Label
+                    forId={inputId}
+                    caption={label}
+                />
+            ) }
             {inputType === 'number'
                 ? (
                     <ButtonWrapper changeHandler={changeHandler} {...props}>
@@ -52,7 +57,9 @@ export const InputField = (props: IInputField) => {
 
 function Label({caption, forId}: ILabel) {
     if (!caption) {
-        return;
+        return (
+            <div />
+        );
     }
 
     return (

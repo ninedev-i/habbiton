@@ -51,7 +51,7 @@ const themes: {light: IThemeProps, dark: IThemeProps} = {
     },
 };
 
-export const ThemeContext = createContext(null);
+export const ThemeContext = createContext({theme: 'light', toggleTheme: () => {}});
 
 export default function ThemeProvider(props: any) {
     const [theme, setTheme] = useState(themes[getTheme()]);

@@ -10,7 +10,9 @@ export const isShowHabit = (habit: IHabit, currentDate: string) => {
     const chosenDay = new Date(currentDate);
     let dayNumber = chosenDay.getDay() - 1;
     dayNumber = dayNumber === -1 ? 6 : dayNumber;
-    return chosenDay >= new Date(dateRange[0]) && weekDays[dayNumber];
+    return typeof dateRange[0] === 'string' && chosenDay >= new Date(dateRange[0]) && weekDays
+        ? weekDays[dayNumber]
+        : false;
 };
 
 export const constants = {

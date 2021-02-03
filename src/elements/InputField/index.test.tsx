@@ -33,7 +33,7 @@ describe('<InputField /> tests', () => {
     test('Is label click focusing input', () => {
         renderNumberInput(6);
         userEvent.click(screen.getByText('Test label'));
-        expect(document.activeElement.id).toBe('testId');
+        expect(document.activeElement?.id).toBe('testId');
     });
 
     test('Input negative value', () => {

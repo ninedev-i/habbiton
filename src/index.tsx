@@ -8,7 +8,6 @@ import {getFormattedDate, showNotification} from './helpers';
 import {Wrapper} from './elements/Wrapper';
 import {Header} from './elements/Header';
 import {Box} from './elements/Box';
-import {IHabit} from '../service/models/Habits';
 
 const Habits = lazy(() => import('./routes/Habits'));
 const Edit = lazy(() => import('./routes/Edit'));
@@ -25,21 +24,21 @@ const ContentWrapper = styled.div`
 const App = observer(() => {
     const [currentDay, setCurrentDay] = useState(getFormattedDate());
     const {time, habitStore} = useContext(StoreContext);
-    const [times, setTimes] = useState([]);
+    const [times, setTimes] = useState<string[]>([]);
 
     useEffect(() => {
         habitStore.getHabits();
     }, []);
 
     useEffect(() => {
-        setTimes(habitStore.habits.map((item: IHabit) => item.notifications).flat());
+        setTimes(habitStore.habits.map((item) => item.notifications).flat());
     }, [habitStore.habits]);
 
     useEffect(() => {
         if (times.includes(time)) {
             habitStore.habits
-                .filter((item: IHabit) => item.notifications.includes(time))
-                .forEach((item: IHabit) => showNotification(item.title));
+                .filter((item) => item.notifications.includes(time))
+                .forEach((item) => showNotification(item.title));
         }
     }, [time, times]);
 

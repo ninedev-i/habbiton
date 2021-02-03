@@ -16,7 +16,7 @@ export const List = observer((props: IList) => {
             return;
         }
 
-        const current = progressStore.progress.get(item._id)?.progress || 0;
+        const current = (item._id && progressStore.progress.get(item._id)?.progress) || 0;
         const width = Math.round((current * 100) / item.countNumber);
 
         return (

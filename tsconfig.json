@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "declaration": false,
+    "strict": true,
     "typeRoots": [
       "./src/@types"
     ],

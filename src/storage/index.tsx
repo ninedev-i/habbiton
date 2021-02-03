@@ -9,11 +9,12 @@ const data = axios.create({
 });
 
 class RootStore {
-    time: string = null;
-    habitStore = new Habits(data);
-    progressStore = new Progress(data);
+    time: string;
+    habitStore: Habits = new Habits(data);
+    progressStore: Progress = new Progress(data);
 
     constructor() {
+        this.time = '';
         makeAutoObservable(this);
         setInterval(this.count.bind(this), 1000);
     }
@@ -26,7 +27,7 @@ class RootStore {
     }
 }
 
-export const StoreContext = createContext(null);
+export const StoreContext = createContext({time: '', habitStore: new Habits(data), progressStore: new Progress(data)});
 
 export default function StoreProvider(props: any) {
     return <StoreContext.Provider value={new RootStore()} {...props} />;

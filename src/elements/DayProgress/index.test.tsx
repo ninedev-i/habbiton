@@ -8,6 +8,7 @@ import {DayProgress} from './index';
 import {IHabit} from '../../storage/habits';
 
 const date = getFormattedDate(new Date());
+const tomorrow = getFormattedDate(new Date(+new Date() + 86400000));
 const habitId = '0';
 
 interface IRender {
@@ -44,9 +45,10 @@ const getData = () => {
         habits: [{
             _id: habitId,
             title: 'Testing habit',
-            dateRange: [date, null],
+            dateRange: [date, tomorrow],
             weekDays: [true, true, true, true, true, true, true],
             countNumber: 100,
+            notifications: [],
         }],
     };
 };

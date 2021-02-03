@@ -2,15 +2,16 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {AxiosInstance} from 'axios';
 
 export interface IHabit {
-    _id: string;
+    _id?: string;
     title: string;
-    dateRange: string[];
-    weekDays?: boolean[];
+    dateRange: (string|null)[];
+    weekDays: boolean[];
     countNumber: number;
+    notifications: string[];
 }
 
 export class Habits {
-    service: AxiosInstance = null;
+    service: AxiosInstance;
 
     habits: IHabit[] = [];
 

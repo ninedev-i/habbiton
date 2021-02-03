@@ -6,7 +6,7 @@ import {IHabit} from './habits';
 export type IProgress = Map<string, {progress: number, date: string, habitId: string, _id?: string}>;
 
 export class Progress {
-    service: AxiosInstance = null;
+    service: AxiosInstance;
 
     habits: IHabit[] = [];
 
@@ -35,7 +35,7 @@ export class Progress {
 
     async increaseProgress(habit: IHabit, day: string): Promise<void> {
         const clonedProgress = new Map(this.progress);
-        const habitId = habit._id;
+        const habitId = habit._id || '';
         const progressId = this.progress.get(habitId)?._id;
 
         if (!progressId) {
@@ -43,10 +43,13 @@ export class Progress {
             this.progress = clonedProgress;
         }
 
-        let habitProgress = clonedProgress.get(habitId).progress;
+        let habitProgress = clonedProgress.get(habitId)?.progress;
         if (!habitProgress || habitProgress < habit.countNumber) {
             habitProgress = habitProgress ? habitProgress + 1 : 1;
-            clonedProgress.set(habitId, {...clonedProgress.get(habitId), ...{progress: habitProgress}});
+            clonedProgress.set(habitId, {
+                ...(clonedProgress.get(habitId) || {progress: 0, date: '', habitId: '', _id: ''}),
+                ...{progress: habitProgress},
+            });
 
             const progress = await this.service
                 .post(`/progress/${progressId || ''}`, clonedProgress.get(habitId))

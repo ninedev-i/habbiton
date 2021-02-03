@@ -23,17 +23,15 @@ const Edit = observer(() => {
     const {habitStore} = useContext(StoreContext);
     const router = useHistory();
     const habitId = useParams<{id: string}>().id;
-    let initialItem;
+    let initialItem: IHabit = {
+        title: '',
+        dateRange: [getFormattedDate(), null],
+        countNumber: 1,
+        weekDays: [true, true, true, true, true, false, false],
+        notifications: [],
+    };
     if (habitId) {
-        initialItem = habitStore.habits.find((item: IHabit) => item._id === habitId);
-    } else {
-        initialItem = {
-            title: '',
-            dateRange: [getFormattedDate(), null],
-            countNumber: 1,
-            weekDays: [true, true, true, true, true, false, false],
-            notifications: [],
-        };
+        initialItem = habitStore.habits.find((item) => item._id === habitId) || initialItem;
     }
 
     const [newItem, setNewItem] = useState(initialItem);
