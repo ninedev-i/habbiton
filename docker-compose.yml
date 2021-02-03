@@ -6,3 +6,13 @@ services:
     build: ""
     ports:
       - "27017:27017"
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    volumes:
+      - ./:/app
+    working_dir: /src
+    ports:
+      - "80:80"

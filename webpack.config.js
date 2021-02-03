@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
     return {
         entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, 'dist/src'),
             filename: '[name].[contenthash].js',
             publicPath,
         },
@@ -42,6 +42,9 @@ module.exports = (env, argv) => {
         devServer: {
             overlay: true,
             historyApiFallback: true,
+        },
+        performance: {
+            hints: false,
         },
         optimization: {
             minimize: true,
