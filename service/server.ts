@@ -23,8 +23,8 @@ export class DatabaseConnection {
         this.app.use(cors());
         this.app.use(express.json());
 
-        this.port = props.port || 3000;
-        this.serviceUrl = props.serviceUrl || 'mongodb://localhost:27017/habits';
+        this.port = props?.port || 3000;
+        this.serviceUrl = props?.serviceUrl || 'mongodb://localhost:27017/habits';
 
         this.app.get('/habits', (req, res) => {
             HabitModel

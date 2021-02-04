@@ -8,7 +8,7 @@ describe('Service check', () => {
 
     beforeAll(async () => {
         base = new DatabaseConnection({
-            port: +process.env.port,
+            port: process.env.port ? +process.env.port : 3000,
             serviceUrl: `mongodb://localhost:${process.env.port}/habits`,
         });
 

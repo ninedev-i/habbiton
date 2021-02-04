@@ -4,13 +4,15 @@
     "description": "Habit task manager extension",
     "main": "src/index.tsx",
     "scripts": {
-        "dev": "webpack serve --mode development --open http://localhost:8080/",
-        "build": "webpack --mode production",
-        "server-watch": "ts-node-dev --project service/tsconfig.server.json service/index.ts",
-        "test": "jest",
-        "test-watch": "jest --watch --onlyChanged",
-        "server-test": "cross-env TESTCONTAINERS_RYUK_DISABLED=true jest -c service/tests/jest.config.ts",
-        "server-test-watch": "cross-env TESTCONTAINERS_RYUK_DISABLED=true jest -c service/tests/jest.config.ts --watch --onlyChanged"
+        "dev:client": "webpack-dev-server --config build/webpack.client.config.ts",
+        "dev:server": "ts-node-dev --project service/tsconfig.server.json service/index.ts",
+        "build": "cross-env NODE_ENV=production npm run build:client && npm run build:server",
+        "build:client": "webpack --config build/webpack.client.config.ts",
+        "build:server": "webpack --config build/webpack.server.config.ts",
+        "test:client": "jest",
+        "test:server": "cross-env TESTCONTAINERS_RYUK_DISABLED=true jest -c service/tests/jest.config.ts",
+        "test-watch:client": "jest --watch --onlyChanged",
+        "test-watch:server": "cross-env TESTCONTAINERS_RYUK_DISABLED=true jest -c service/tests/jest.config.ts --watch --onlyChanged"
     },
     "license": "ISC",
     "devDependencies": {
@@ -31,7 +33,7 @@
         "@types/styled-components": "^5.1.7",
         "@types/supertest": "^2.0.10",
         "@types/testing-library__jest-dom": "^5.9.5",
-        "@types/webpack": "4.41.25",
+        "@types/webpack": "4.41.26",
         "@types/webpack-dev-server": "^3.11.1",
         "@typescript-eslint/eslint-plugin": "^2.6.1",
         "@typescript-eslint/parser": "^2.6.1",
@@ -58,7 +60,8 @@
         "typescript": "^4.0.3",
         "webpack": "^5.11.0",
         "webpack-cli": "^4.2.0",
-        "webpack-dev-server": "4.0.0-beta.0"
+        "webpack-dev-server": "4.0.0-beta.0",
+        "webpack-merge": "^5.7.3"
     },
     "dependencies": {
         "axios": "^0.21.1",

@@ -30,7 +30,7 @@
     "arrow-body-style": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.tsx", "**/*.test.ts", "webpack.config.js"]}],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.tsx", "**/*.test.ts", "build/**"]}],
     "react/prop-types": "off",
     "consistent-return": "off"
   },
