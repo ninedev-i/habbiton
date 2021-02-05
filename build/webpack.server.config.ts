@@ -1,16 +1,16 @@
 const path = require('path');
 const {merge} = require('webpack-merge');
-const cfg = require('./2webpack.base.config');
+const nodeExternals = require('webpack-node-externals');
+const cfg = require('./webpack.base.config');
 
 const config = merge(cfg, {
-    entry: './service/server.ts',
+    entry: './service/index.ts',
     output: {
+        filename: '[name].js',
         path: path.resolve(__dirname, '../dist/server'),
     },
-    target: ['web', 'es2017'],
-    externals: {
-        express: 'express',
-    },
+    target: ['node'],
+    externals: [nodeExternals()],
     resolve: {
         extensions: ['.ts', '.js'],
         fallback: {

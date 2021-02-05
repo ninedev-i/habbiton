@@ -1,13 +1,14 @@
 const path = require('path');
 const {merge} = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const baseCfg = require('./2webpack.base.config');
+const baseCfg = require('./webpack.base.config');
 
 const config = merge(baseCfg, {
     entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, '../dist/src'),
     },
+    target: ['web', 'es2017'],
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
     },

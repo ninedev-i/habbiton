@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {GenericContainer, StartedTestContainer} from 'testcontainers';
 
 export default async (): Promise<void> => {

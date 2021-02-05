@@ -8,7 +8,6 @@ const baseConfig = {
         publicPath: '/',
     },
     mode: process.env.NODE_ENV || 'development',
-    target: ['web', 'es2017'],
     performance: {
         hints: false,
     },
