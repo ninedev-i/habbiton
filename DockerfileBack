@@ -1,0 +1,15 @@
+FROM node:alpine
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY package*.json tsconfig.json /build /service /app/
+
+RUN npm install
+RUN npm build
+
+COPY /dist/server /app/
+
+EXPOSE 3000
+
+CMD ["node", "main.js"]

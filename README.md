@@ -2,13 +2,19 @@
 
 This is a habit tracker application with web notifications.
 
-## Usage
+## Development
 ```
 git clone https://github.com/ninedev-i/habbiton.git
 npm install
+docker-compose up -d mongo
+npm run dev:server
+npm run dev:client
+```
+
+## Production
+```
+git clone https://github.com/ninedev-i/habbiton.git
 docker-compose up
-npm run server-watch
-npm run dev
 ```
 
 It starts a dev server on [localhost:8080](http://localhost:8080).

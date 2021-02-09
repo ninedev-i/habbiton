@@ -10,9 +10,15 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: src/Dockerfile
+      dockerfile: DockerfileFront
     volumes:
       - ./:/app
-    working_dir: /src
     ports:
       - "80:80"
+  express:
+    container_name: express
+    build:
+      context: .
+      dockerfile: DockerfileBack
+    ports:
+      - "3000:3000"
