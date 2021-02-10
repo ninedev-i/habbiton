@@ -1,6 +1,7 @@
 import React, {createContext} from 'react';
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeObservable, observable, action} from 'mobx';
 import axios from 'axios';
+import {getFormattedDate} from '../helpers';
 import {Habits} from './habits';
 import {Progress} from './progress';
 
@@ -10,24 +11,33 @@ const data = axios.create({
 
 class RootStore {
     time: string;
+    currentDay: string;
     habitStore: Habits = new Habits(data);
     progressStore: Progress = new Progress(data);
 
     constructor() {
         this.time = '';
-        makeAutoObservable(this);
-        setInterval(this.count.bind(this), 1000);
+        this.currentDay = getFormattedDate();
+        makeObservable(this, {
+            time: observable,
+            setTime: action,
+            currentDay: observable,
+            setCurrentDay: action.bound,
+        });
+        setInterval(this.setTime.bind(this), 1000);
     }
 
-    count() {
-        runInAction(() => {
-            const now = new Date();
-            this.time = `${now.getHours()}:${now.getMinutes()}`;
-        });
+    setTime() {
+        const now = new Date();
+        this.time = `${now.getHours()}:${now.getMinutes()}`;
+    }
+
+    setCurrentDay(currentDay: Date) {
+        this.currentDay = getFormattedDate(currentDay);
     }
 }
 
-export const StoreContext = createContext({time: '', habitStore: new Habits(data), progressStore: new Progress(data)});
+export const StoreContext = createContext(new RootStore());
 
 export default function StoreProvider(props: any) {
     return <StoreContext.Provider value={new RootStore()} {...props} />;

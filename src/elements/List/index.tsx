@@ -4,15 +4,13 @@ import {observer} from 'mobx-react-lite';
 import {StoreContext} from '../../storage';
 import {isShowHabit} from '../../helpers';
 import {ListItem, Title, Progress, Done, Toolbar, Counter} from './styled';
-import {IList} from './interface';
 
-export const List = observer((props: IList) => {
-    const {items, currentDate} = props;
-    const {progressStore} = useContext(StoreContext);
+export const List = observer(() => {
+    const {habitStore, progressStore, currentDay} = useContext(StoreContext);
     const router = useHistory();
 
-    const list = items.map((item) => {
-        if (!isShowHabit(item, currentDate)) {
+    const list = habitStore.habits.map((item) => {
+        if (!isShowHabit(item, currentDay)) {
             return;
         }
 
@@ -23,7 +21,7 @@ export const List = observer((props: IList) => {
             <ListItem
                 key={item._id}
                 role="presentation"
-                onClick={() => progressStore.increaseProgress(item, currentDate)}
+                onClick={() => progressStore.increaseProgress(item, currentDay)}
             >
                 <Progress
                     width={width}

@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import {StoreContext} from './storage';
-import {getFormattedDate, showNotification} from './helpers';
+import {showNotification} from './helpers';
 import {Wrapper} from './elements/Wrapper';
 import {Header} from './elements/Header';
 import {Box} from './elements/Box';
@@ -22,7 +22,6 @@ const ContentWrapper = styled.div`
 `;
 
 const App = observer(() => {
-    const [currentDay, setCurrentDay] = useState(getFormattedDate());
     const {time, habitStore} = useContext(StoreContext);
     const [times, setTimes] = useState<string[]>([]);
 
@@ -52,12 +51,7 @@ const App = observer(() => {
                             <Route
                                 exact
                                 path="/"
-                                render={() => (
-                                    <Habits
-                                        currentDay={currentDay}
-                                        setCurrentDay={setCurrentDay}
-                                    />
-                                )}
+                                component={Habits}
                             />
 
                             <Route

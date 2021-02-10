@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeObservable, observable, action} from 'mobx';
 import {AxiosInstance} from 'axios';
 import {IProgressData} from '../../service/models/Progress';
 import {IHabit} from './habits';
@@ -7,13 +7,16 @@ export type IProgress = Map<string, {progress: number, date: string, habitId: st
 
 export class Progress {
     service: AxiosInstance;
-
     habits: IHabit[] = [];
-
     progress: IProgress = new Map();
 
     constructor(service: AxiosInstance) {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            habits: observable,
+            progress: observable,
+            setProgress: action,
+            increaseProgress: action,
+        });
         this.service = service;
     }
 
@@ -22,11 +25,9 @@ export class Progress {
             .get(`/progress/${date}`)
             .then((res) => res.data);
 
-        runInAction(() => {
-            const output = new Map();
-            progress.forEach((item: IProgressData) => output.set(item.habitId, item));
-            this.setProgress(output);
-        });
+        const output = new Map();
+        progress.forEach((item: IProgressData) => output.set(item.habitId, item));
+        this.setProgress(output);
     }
 
     setProgress(progress: IProgress): void {
@@ -55,10 +56,8 @@ export class Progress {
                 .post(`/progress/${progressId || ''}`, clonedProgress.get(habitId))
                 .then((res) => res.data);
 
-            runInAction(() => {
-                clonedProgress.set(habitId, progress);
-                this.setProgress(clonedProgress);
-            });
+            clonedProgress.set(habitId, progress);
+            this.setProgress(clonedProgress);
         }
     }
 }

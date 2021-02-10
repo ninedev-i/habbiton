@@ -1,10 +1,10 @@
 import React, {useContext, useEffect} from 'react';
+import {observer} from 'mobx-react-lite';
 import styled from 'styled-components';
 import {StoreContext} from '../storage';
 import {List} from '../elements/List';
 import {DayProgress} from '../elements/DayProgress';
 import {DatePicker} from '../elements/DatePicker';
-import {getFormattedDate} from '../helpers';
 import {Box} from '../elements/Box';
 
 const Calendar = styled.div`
@@ -12,9 +12,8 @@ const Calendar = styled.div`
     padding: 0 12px;
 `;
 
-const Habits = (props: {currentDay: string, setCurrentDay: Function}) => {
-    const {currentDay, setCurrentDay} = props;
-    const {habitStore, progressStore} = useContext(StoreContext);
+const Habits = observer(() => {
+    const {currentDay, progressStore} = useContext(StoreContext);
 
     useEffect(() => {
         progressStore.getProgress(currentDay);
@@ -23,26 +22,17 @@ const Habits = (props: {currentDay: string, setCurrentDay: Function}) => {
     return (
         <Box flex>
             <Box grow="1" margin="8px 12px 0 0">
-                <DayProgress
-                    items={habitStore.habits}
-                    currentDate={currentDay}
-                />
-
-                <List
-                    items={habitStore.habits}
-                    currentDate={currentDay}
-                />
+                <DayProgress />
+                <List />
             </Box>
             <Calendar>
                 <DatePicker
                     mode="single"
                     disableDaysOfWeek
-                    selected={new Date(currentDay)}
-                    setSelected={(selection: Date) => setCurrentDay(getFormattedDate(selection))}
                 />
             </Calendar>
         </Box>
     );
-};
+});
 
 export default Habits;

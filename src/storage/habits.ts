@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeObservable, action, observable} from 'mobx';
 import {AxiosInstance} from 'axios';
 
 export interface IHabit {
@@ -12,11 +12,13 @@ export interface IHabit {
 
 export class Habits {
     service: AxiosInstance;
-
     habits: IHabit[] = [];
 
     constructor(service: AxiosInstance) {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            habits: observable,
+            setHabits: action,
+        });
         this.service = service;
     }
 
@@ -25,9 +27,11 @@ export class Habits {
             .get<IHabit[]>('/habits')
             .then(({data}) => data);
 
-        runInAction(() => {
-            this.habits = habits;
-        });
+        this.setHabits(habits);
+    }
+
+    setHabits(habits: IHabit[]): void {
+        this.habits = habits;
     }
 
     async saveHabit(habit: IHabit): Promise<void> {
@@ -35,18 +39,17 @@ export class Habits {
             .post(`/habits/${habit._id || ''}`, habit)
             .then(({data}) => data);
 
-        runInAction(() => {
-            this.habits = habit._id
-                ? this.habits.slice(0).map((item) => (item._id === habit._id ? habits : item))
-                : [...this.habits, habits];
-        });
+        const result = habit._id
+            ? this.habits.slice(0).map((item) => (item._id === habit._id ? habits : item))
+            : [...this.habits, habits];
+        this.setHabits(result);
     }
 
     deleteHabit(key: string): Promise<void> {
         return this.service
             .delete(`/habits/${key}`)
             .then(() => {
-                this.habits = this.habits.filter((item) => item._id !== key);
+                this.setHabits(this.habits.filter((item) => item._id !== key));
             });
     }
 }

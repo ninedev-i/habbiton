@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {observer} from 'mobx-react-lite';
 import Calendar from 'simple-react-calendar';
-// import Day from 'simple-react-calendar/lib/RenderPropsComponents/Day';
+import {StoreContext} from '../../storage';
 import {CalendarStyles} from './styles';
 
 interface IDatePicker {
     mode: string;
     disableDaysOfWeek: boolean;
-    selected: Date;
-    setSelected: Function;
 }
 
-export const DatePicker = (props: IDatePicker) => {
-    const {mode, selected, setSelected, disableDaysOfWeek} = props;
+export const DatePicker = observer((props: IDatePicker) => {
+    const {mode, disableDaysOfWeek} = props;
+    const {currentDay, setCurrentDay} = useContext(StoreContext);
 
     return (
         <>
@@ -21,16 +21,9 @@ export const DatePicker = (props: IDatePicker) => {
                 disableDaysOfWeek={disableDaysOfWeek}
                 mode={mode || 'range'}
                 activeMonth={new Date()}
-                // renderDay={(properties: IDatePicker) => <DayAccented {...properties} />}
-                selected={selected}
-                onSelect={(selection: IDatePicker) => setSelected(selection)}
+                selected={new Date(currentDay)}
+                onSelect={(selection: Date) => setCurrentDay(selection)}
             />
         </>
     );
-};
-
-// function DayAccented(/* props: IDatePicker */) {
-//     const {ISODate} = props;
-//     return <Day {...props} />;
-//     return <div>day</div>;
-// }
+});
