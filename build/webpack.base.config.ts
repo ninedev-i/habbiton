@@ -12,7 +12,7 @@ const baseConfig = {
         hints: false,
     },
     optimization: {
-        minimize: true,
+        minimize: process.env.NODE_ENV !== 'development',
         runtimeChunk: 'single',
         splitChunks: {
             chunks: 'all',
