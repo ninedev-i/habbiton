@@ -1,9 +1,9 @@
+version: "3"
+
 services:
-  mongo:
-    container_name: mongo
-    hostname: mongo
+  mongodb:
+    container_name: mongodb
     image: mongo
-    build: ""
     ports:
       - "27017:27017"
   app:
@@ -12,13 +12,18 @@ services:
       context: .
       dockerfile: DockerfileFront
     volumes:
-      - ./:/app
+      - .:/app
+      - /app/node_modules
     ports:
       - "80:80"
   express:
     container_name: express
     build:
-      context: .
+      context: ./
       dockerfile: DockerfileBack
     ports:
       - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - SERVICE_URL=mongodb:27017

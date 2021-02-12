@@ -24,7 +24,7 @@ export class DatabaseConnection {
         this.app.use(express.json());
 
         this.port = props?.port || 3000;
-        this.serviceUrl = props?.serviceUrl || 'mongodb://localhost:27017/habits';
+        this.serviceUrl = props?.serviceUrl || 'localhost:27017';
 
         this.app.get('/habits', (req, res) => {
             HabitModel
@@ -90,7 +90,7 @@ export class DatabaseConnection {
         };
 
         return mongoose
-            .connect(this.serviceUrl, connectionSettings)
+            .connect(`mongodb://${this.serviceUrl}/habits`, connectionSettings)
             .then(() => {
                 this.isConnected = true;
             })
